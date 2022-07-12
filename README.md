@@ -12,7 +12,7 @@ https://user-images.githubusercontent.com/40512164/178066018-0d3fa234-a5b5-4a41-
 
 ## Install
 Using [vim-plug](https://github.com/junegunn/vim-plug):
-```
+```vim
 Plug 'jinh0/eyeliner.nvim'
 ```
 
