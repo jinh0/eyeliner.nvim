@@ -2,7 +2,7 @@
 Move faster with unique `f`/`F` indicators for each word on the line.
 Like [quick-scope.vim](https://github.com/unblevable/quick-scope) but in Lua.
 
-🚧 **WIP: The main functionality should work, but at the current moment, the plugin is very limited in customizability.**
+🚧 **WIP: The plugin is still in its early stages, feel free to create an issue or a PR!**
 
 ## Demo
 In the demo, the orange letters indicate the unique letter in the word that you can jump to with `f`/`F` right away.
