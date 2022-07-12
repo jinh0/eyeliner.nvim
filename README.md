@@ -10,18 +10,31 @@ Blue letters indicate that there is no unique letter in the word, but you can ge
 
 https://user-images.githubusercontent.com/40512164/178066018-0d3fa234-a5b5-4a41-a340-430e8c4c2739.mov
 
-## Setup
-Packer:
+## Install
+Using [vim-plug](https://github.com/junegunn/vim-plug):
+```
+Plug 'jinh0/eyeliner.nvim'
+```
+
+Using [packer.nvim](https://github.com/wbthomason/packer.nvim):
+```lua
+use 'jinh0/eyeliner.nvim'
+```
+
+or with setup options:
 ```lua
 use {
   'jinh0/eyeliner.nvim',
   config = function()
-    require'eyeliner'.setup{}
+    require'eyeliner'.setup {
+      bold = true
+    }
   end
 }
 ```
+Read more about configuration below.
 
-## Options
+## Configuration
 
 ```lua
 require('eyeliner').setup {
