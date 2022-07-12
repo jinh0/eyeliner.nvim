@@ -2,6 +2,8 @@
 Move faster with unique `f`/`F` indicators for each word on the line.
 Like [quick-scope.vim](https://github.com/unblevable/quick-scope) but in Lua.
 
+(Requires Neovim 0.5+)
+
 🚧 **WIP: The plugin is still in its early stages, feel free to create an issue or a PR!**
 
 ## Demo
