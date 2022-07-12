@@ -30,8 +30,8 @@ function M.set_hl_colors()
   local secondary_color = utils.get_syncolor('Define')
 
   local gui_feats = set_font_style()
-  vim.cmd('highlight! def EyelinerPrimary ' .. (gui_feats ~= '' and 'gui=' .. gui_feats or '').. ' guifg=' .. primary_color)
-  vim.cmd('highlight! def EyelinerSecondary ' .. (gui_feats ~= '' and 'gui=' .. gui_feats or '').. ' guifg=' .. secondary_color)
+  vim.cmd('highlight! def EyelinerPrimary ' .. ((gui_feats ~= nil and gui_feats ~= '') and 'gui=' .. gui_feats or '') .. ' guifg=' .. primary_color)
+  vim.cmd('highlight! def EyelinerSecondary ' .. ((gui_feats ~= nil and gui_feats ~= '') and 'gui=' .. gui_feats or '') .. ' guifg=' .. secondary_color)
 end
 
 function M.enable()
