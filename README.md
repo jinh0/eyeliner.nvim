@@ -26,15 +26,15 @@ or with setup options:
 use {
   'jinh0/eyeliner.nvim',
   config = function()
-    require'eyeliner'.setup {
+    require('eyeliner').setup {
       bold = true
     }
   end
 }
 ```
-Read more about configuration below.
 
 ## Configuration
+Currently, eyeliner.nvim supports bold and underline options:
 
 ```lua
 require('eyeliner').setup {
