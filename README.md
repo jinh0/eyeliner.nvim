@@ -16,7 +16,25 @@ Packer:
 use {
   'jinh0/eyeliner.nvim',
   config = function()
-    require('eyeliner').setup{}
+    require'eyeliner'.setup{}
   end
 }
 ```
+
+## Options
+
+```lua
+require('eyeliner').setup {
+  bold = true, -- Default: false
+  underline = true -- Default: false
+}
+```
+
+<details>
+<summary>
+Bold & Underline:
+</summary>
+
+![Bold & underline](https://user-images.githubusercontent.com/40512164/178532882-2e50ccf6-4134-48df-bd2c-e61e099d00b0.png)
+
+</details>
