@@ -35,7 +35,7 @@ use {
 }
 ```
 
-## Highlighting
+## Highlighting Options
 You can customize the highlight colors and styles with the `EyelinerPrimary` and `EyelinerSecondary` highlight groups, for instance:
 
 In Vimscript:
