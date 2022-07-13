@@ -35,6 +35,21 @@ use {
 }
 ```
 
+## Highlighting
+You can customize the highlight colors and styles with the `EyelinerPrimary` and `EyelinerSecondary` highlight groups, for instance:
+
+In Vimscript:
+```vim
+highlight EyelinerPrimary guifg='#afff5f' gui=underline,bold
+highlight EyelinerSecondary gui=underline
+```
+
+In Lua:
+```lua
+vim.api.nvim_set_hl(0, 'EyelinerPrimary', { fg = '#afff5f', bold = true, underline = true })
+vim.api.nvim_set_hl(0, 'EyelinerSecondary', { underline = true })
+```
+<!--
 ## Configuration
 Currently, eyeliner.nvim supports bold and underline options:
 
@@ -53,3 +68,4 @@ Bold & Underline:
 ![Bold & underline](https://user-images.githubusercontent.com/40512164/178532882-2e50ccf6-4134-48df-bd2c-e61e099d00b0.png)
 
 </details>
+-->
