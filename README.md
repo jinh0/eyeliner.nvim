@@ -23,18 +23,6 @@ Using [packer.nvim](https://github.com/wbthomason/packer.nvim):
 use 'jinh0/eyeliner.nvim'
 ```
 
-or with setup options:
-```lua
-use {
-  'jinh0/eyeliner.nvim',
-  config = function()
-    require('eyeliner').setup {
-      bold = true
-    }
-  end
-}
-```
-
 ## Highlighting Options
 You can customize the highlight colors and styles with the `EyelinerPrimary` and `EyelinerSecondary` highlight groups, for instance:
 
