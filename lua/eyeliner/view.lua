@@ -15,23 +15,17 @@ M.enabled = false
 local prev_y, y = 0, 0
 local ns_id = vim.api.nvim_create_namespace('eyeliner')
 
-local function set_font_style()
-  if config.opts.bold and config.opts.underline then
-    return 'bold,underline'
-  elseif config.opts.bold then
-    return 'bold'
-  elseif config.opts.underline then
-    return 'underline'
-  end
-end
-
 function M.set_hl_colors()
   local primary_color = utils.get_syncolor('Constant')
   local secondary_color = utils.get_syncolor('Define')
 
-  local gui_feats = set_font_style()
-  vim.cmd('highlight! def EyelinerPrimary ' .. ((gui_feats ~= nil and gui_feats ~= '') and 'gui=' .. gui_feats or '') .. ' guifg=' .. primary_color)
-  vim.cmd('highlight! def EyelinerSecondary ' .. ((gui_feats ~= nil and gui_feats ~= '') and 'gui=' .. gui_feats or '') .. ' guifg=' .. secondary_color)
+  local opts = config.opts
+  vim.api.nvim_set_hl(0, 'EyelinerPrimary', {
+    fg = primary_color, bold = opts.bold, underline = opts.underline
+  })
+  vim.api.nvim_set_hl(0, 'EyelinerSecondary', {
+    fg = secondary_color, bold = opts.bold, underline = opts.underline
+  })
 end
 
 function M.enable()
