@@ -37,23 +37,18 @@ In Lua:
 vim.api.nvim_set_hl(0, 'EyelinerPrimary', { fg = '#afff5f', bold = true, underline = true })
 vim.api.nvim_set_hl(0, 'EyelinerSecondary', { underline = true })
 ```
-<!--
-## Configuration
-Currently, eyeliner.nvim supports bold and underline options:
 
-```lua
-require('eyeliner').setup {
-  bold = true, -- Default: false
-  underline = true -- Default: false
-}
+### Update highlights when the colorscheme is changed
+In Vimscript:
+```vim
+autocmd ColorScheme * :highlight EyelinerPrimary ...
 ```
-
-<details>
-<summary>
-Bold & Underline:
-</summary>
-
-![Bold & underline](https://user-images.githubusercontent.com/40512164/178532882-2e50ccf6-4134-48df-bd2c-e61e099d00b0.png)
-
-</details>
--->
+In Lua:
+```lua
+vim.api.nvim_create_autocmd('ColorScheme',
+  pattern = '*',
+  callback = function()
+    vim.api.nvim_set_hl(0, 'EyelinerPrimary', { bold = true, underline = true })
+  end,
+)
+```
