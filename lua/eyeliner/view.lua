@@ -46,7 +46,7 @@ end
 function M.disable()
   if M.enabled then
     M.clear_highlight()
-    pcall(vim.cmd, 'autocmd! Eyeliner')
+    pcall(vim.cmd, 'autocmd! EyelinerToggle')
     pcall(vim.cmd, 'augroup! Eyeliner')
 
     M.enabled = false
