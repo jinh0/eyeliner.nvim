@@ -2,8 +2,6 @@
 Move faster with unique `f`/`F` indicators for each word on the line.
 Like [quick-scope.vim](https://github.com/unblevable/quick-scope) but in Lua.
 
-(Requires Neovim 0.7+)
-
 🚧 **WIP: The plugin is still in its early stages, feel free to create an issue or a PR!**
 
 ## Demo
@@ -13,6 +11,8 @@ Blue letters indicate that there is no unique letter in the word, but you can ge
 https://user-images.githubusercontent.com/40512164/178066018-0d3fa234-a5b5-4a41-a340-430e8c4c2739.mov
 
 ## Install
+Requirement: Neovim >= 0.7.0
+
 Using [vim-plug](https://github.com/junegunn/vim-plug):
 ```vim
 Plug 'jinh0/eyeliner.nvim'
