@@ -19,13 +19,8 @@ function M.set_hl_colors()
   local primary_color = utils.get_syncolor('Constant')
   local secondary_color = utils.get_syncolor('Define')
 
-  local opts = config.opts
-  vim.api.nvim_set_hl(0, 'EyelinerPrimary', {
-    fg = primary_color, bold = opts.bold, underline = opts.underline, default = true
-  })
-  vim.api.nvim_set_hl(0, 'EyelinerSecondary', {
-    fg = secondary_color, bold = opts.bold, underline = opts.underline, default = true
-  })
+  vim.api.nvim_set_hl(0, 'EyelinerPrimary', { fg = primary_color, default = true })
+  vim.api.nvim_set_hl(0, 'EyelinerSecondary', { fg = secondary_color, default = true })
 end
 
 function M.enable()

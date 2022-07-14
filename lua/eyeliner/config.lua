@@ -1,12 +1,6 @@
 local M = {}
 
-local defaults = {
-  primary_color = nil,
-  secondary_color = nil,
-  underline = false,
-  bold = false,
-  debug = false
-}
+local defaults = {}
 
 M.opts = defaults
 
