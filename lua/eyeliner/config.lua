@@ -1,6 +1,8 @@
 local M = {}
 
-local defaults = {}
+local defaults = {
+  highlight_on_key = true
+}
 
 M.opts = defaults
 

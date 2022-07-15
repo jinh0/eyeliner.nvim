@@ -28,19 +28,43 @@ function M.enable()
     M.enabled = true
 
     M.set_hl_colors()
-    vim.cmd([[
-      augroup Eyeliner
-        autocmd!
-        autocmd BufWritePost,CursorMoved,WinScrolled * lua require('eyeliner.view').handle_hover()
-        autocmd ColorScheme * lua require('eyeliner.view').set_hl_colors()
-      augroup end
-    ]])
+
+    local group_id = vim.api.nvim_create_augroup('Eyeliner', {})
+    vim.api.nvim_create_autocmd('ColorScheme', {
+      group = group_id,
+      callback = function()
+        return require('eyeliner.view').set_hl_colors()
+      end
+    })
+
+    if config.opts.highlight_on_key then
+      for _, key in ipairs({'f', 'F', 't', 'T'}) do
+        vim.keymap.set({'n', 'v'}, key, function()
+          vim.api.nvim_feedkeys(key, 'n', true)
+          require('eyeliner.view').handle_hover()
+        end)
+      end
+
+      vim.api.nvim_create_autocmd({'BufWritePost', 'CursorMoved', 'WinScrolled', 'InsertEnter'}, {
+        group = group_id,
+        callback = function()
+          require('eyeliner.view').clear_cursor_highlight()
+        end
+      })
+    else
+      vim.api.nvim_create_autocmd({'BufWritePost', 'CursorMoved', 'WinScrolled', 'InsertEnter'}, {
+        group = group_id,
+        callback = function()
+          require('eyeliner.view').handle_hover()
+        end
+      })
+    end
   end
 end
 
 function M.disable()
   if M.enabled then
-    M.clear_highlight()
+    M.clear_prev_highlight()
     vim.api.nvim_del_augroup_by_name('Eyeliner')
 
     M.enabled = false
@@ -62,11 +86,16 @@ function M.handle_hover()
   y = cursor[1]
   local x = cursor[2]
 
-  M.clear_highlight()
+  M.clear_prev_highlight()
   M.traverse(line, x)
 end
 
-function M.clear_highlight()
+function M.clear_cursor_highlight()
+  local cursor = vim.api.nvim_win_get_cursor(0)
+  vim.api.nvim_buf_clear_namespace(0, ns_id, cursor[1] - 1, cursor[1] + 1)
+end
+
+function M.clear_prev_highlight()
   if (prev_y == 0) then
     vim.api.nvim_buf_clear_namespace(0, ns_id, 0, prev_y + 1)
   else
