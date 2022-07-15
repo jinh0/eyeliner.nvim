@@ -24,17 +24,19 @@ use 'jinh0/eyeliner.nvim'
 ```
 
 ## Highlighting Options
-You can customize the highlight colors and styles with the `EyelinerPrimary` and `EyelinerSecondary` highlight groups, for instance:
+You can customize the highlight colors and styles with the `EyelinerPrimary` and `EyelinerSecondary` highlight groups.
+
+For instance, if you wanted to make eyeliner.nvim more subtle by only using bold and underline, with no color,
 
 In Vimscript:
 ```vim
-highlight EyelinerPrimary guifg='#afff5f' gui=underline,bold
+highlight EyelinerPrimary gui=underline,bold
 highlight EyelinerSecondary gui=underline
 ```
 
 In Lua:
 ```lua
-vim.api.nvim_set_hl(0, 'EyelinerPrimary', { fg = '#afff5f', bold = true, underline = true })
+vim.api.nvim_set_hl(0, 'EyelinerPrimary', { bold = true, underline = true })
 vim.api.nvim_set_hl(0, 'EyelinerSecondary', { underline = true })
 ```
 
