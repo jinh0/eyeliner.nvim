@@ -18,10 +18,4 @@ function M.is_alpha(c)
   return alphas[c]
 end
 
---- @param hl_group string
---- @return string guifg
-function M.get_syncolor(hl_group)
-  return vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID(hl_group)), 'fg#')
-end
-
 return M
