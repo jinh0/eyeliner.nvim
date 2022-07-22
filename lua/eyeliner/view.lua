@@ -24,51 +24,62 @@ function M.set_hl_colors()
 end
 
 function M.enable()
-  if not M.enabled then
-    M.enabled = true
+  if M.enabled then return end
 
-    M.set_hl_colors()
+  M.enabled = true
 
-    local group_id = vim.api.nvim_create_augroup('Eyeliner', {})
-    vim.api.nvim_create_autocmd('ColorScheme', {
+  M.set_hl_colors()
+
+  local group_id = vim.api.nvim_create_augroup('Eyeliner', {})
+  vim.api.nvim_create_autocmd('ColorScheme', {
+    group = group_id,
+    callback = function()
+      return require('eyeliner.view').set_hl_colors()
+    end
+  })
+
+  if config.opts.highlight_on_key then
+    for _, key in ipairs({'f', 'F', 't', 'T'}) do
+      vim.keymap.set({'n', 'v'}, key, function()
+        require('eyeliner.view').handle_hover()
+        local char = vim.fn.getcharstr()
+        vim.notify(vim.inspect(char))
+
+        -- Default behavior
+        vim.api.nvim_feedkeys(key, 'n', true)
+        vim.api.nvim_feedkeys(char, 'n', true)
+
+
+        -- char = vim.fn.getcharstr()
+        -- vim.notify(vim.inspect(char))
+        -- vim.api.nvim_feedkeys(char, 'n', true)
+        
+      end)
+    end
+
+    vim.api.nvim_create_autocmd({'BufWritePost', 'CursorMoved', 'WinScrolled', 'InsertEnter'}, {
       group = group_id,
       callback = function()
-        return require('eyeliner.view').set_hl_colors()
+        return require('eyeliner.view').clear_cursor_highlight()
       end
     })
-
-    if config.opts.highlight_on_key then
-      for _, key in ipairs({'f', 'F', 't', 'T'}) do
-        vim.keymap.set({'n', 'v'}, key, function()
-          vim.api.nvim_feedkeys(key, 'n', true)
-          require('eyeliner.view').handle_hover()
-        end)
+  else
+    vim.api.nvim_create_autocmd({'BufReadPost', 'CursorMoved', 'WinScrolled'}, {
+      group = group_id,
+      callback = function()
+        return require('eyeliner.view').handle_hover()
       end
-
-      vim.api.nvim_create_autocmd({'BufWritePost', 'CursorMoved', 'WinScrolled', 'InsertEnter'}, {
-        group = group_id,
-        callback = function()
-          require('eyeliner.view').clear_cursor_highlight()
-        end
-      })
-    else
-      vim.api.nvim_create_autocmd({'BufWritePost', 'CursorMoved', 'WinScrolled', 'InsertEnter'}, {
-        group = group_id,
-        callback = function()
-          require('eyeliner.view').handle_hover()
-        end
-      })
-    end
+    })
   end
 end
 
 function M.disable()
-  if M.enabled then
-    M.clear_prev_highlight()
-    vim.api.nvim_del_augroup_by_name('Eyeliner')
+  if not M.enabled then return end
 
-    M.enabled = false
-  end
+  M.clear_prev_highlight()
+  vim.api.nvim_del_augroup_by_name('Eyeliner')
+
+  M.enabled = false
 end
 
 function M.toggle()

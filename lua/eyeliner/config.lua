@@ -1,3 +1,4 @@
+-- Configuration
 local M = {}
 
 local defaults = {
