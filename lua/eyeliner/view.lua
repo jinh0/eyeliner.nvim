@@ -16,11 +16,11 @@ local prev_y, y = 0, 0
 local ns_id = vim.api.nvim_create_namespace('eyeliner')
 
 function M.set_hl_colors()
-  local primary_color = utils.get_syncolor('Constant')
-  local secondary_color = utils.get_syncolor('Define')
+  local primary_color = vim.api.nvim_get_hl_by_name('Constant', true)
+  local secondary_color = vim.api.nvim_get_hl_by_name('Define', true)
 
-  vim.api.nvim_set_hl(0, 'EyelinerPrimary', { fg = primary_color, default = true })
-  vim.api.nvim_set_hl(0, 'EyelinerSecondary', { fg = secondary_color, default = true })
+  vim.api.nvim_set_hl(0, 'EyelinerPrimary', { fg = primary_color.foreground, default = true })
+  vim.api.nvim_set_hl(0, 'EyelinerSecondary', { fg = secondary_color.foreground, default = true })
 end
 
 function M.enable()
