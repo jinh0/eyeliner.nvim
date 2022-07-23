@@ -38,6 +38,13 @@ use {
 }
 ```
 
+<details>
+<summary>Demo</summary>
+
+https://user-images.githubusercontent.com/40512164/180614964-c1a63671-7fa8-438d-ad4f-c90079adf098.mov
+
+</details>
+
 ## Highlight Colors
 You can customize the highlight colors and styles with the `EyelinerPrimary` and `EyelinerSecondary` highlight groups.
 
