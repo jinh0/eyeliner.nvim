@@ -62,6 +62,20 @@ vim.api.nvim_set_hl(0, 'EyelinerPrimary', { bold = true, underline = true })
 vim.api.nvim_set_hl(0, 'EyelinerSecondary', { underline = true })
 ```
 
+If you want to set a custom color:
+
+In Vimscript:
+```vim
+highlight EyelinerPrimary guifg=#000000 gui=underline,bold
+highlight EyelinerSecondary guifg=#ffffff gui=underline
+```
+
+In Lua:
+```lua
+vim.api.nvim_set_hl(0, 'EyelinerPrimary', { fg='#000000', bold = true, underline = true })
+vim.api.nvim_set_hl(0, 'EyelinerSecondary', { fg='#ffffff', underline = true })
+```
+
 ### Update highlights when the colorscheme is changed
 In Vimscript:
 ```vim
