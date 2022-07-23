@@ -23,7 +23,22 @@ Using [packer.nvim](https://github.com/wbthomason/packer.nvim):
 use 'jinh0/eyeliner.nvim'
 ```
 
-## Highlighting Options
+## Show highlights only after keypress
+If you prefer to have eyeliner's highlights shown only after you press `f`/`F`/`t`/`T`, set `highlight_on_key` to `true` in the setup function.
+
+In Lua:
+```lua
+use {
+  '~/dev/eyeliner.nvim',
+  config = function()
+    require'eyeliner'.setup {
+      highlight_on_key = true
+    }
+  end
+}
+```
+
+## Highlight Colors
 You can customize the highlight colors and styles with the `EyelinerPrimary` and `EyelinerSecondary` highlight groups.
 
 For instance, if you wanted to make eyeliner.nvim more subtle by only using bold and underline, with no color,
