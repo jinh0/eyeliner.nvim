@@ -2,7 +2,7 @@
 local M = {}
 
 local defaults = {
-  highlight_on_key = true
+  highlight_on_key = false
 }
 
 M.opts = defaults
