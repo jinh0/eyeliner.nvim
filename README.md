@@ -1,16 +1,18 @@
-# 👀 eyeliner.nvim
-Move faster with unique `f`/`F` indicators for each word on the line.
-Like [quick-scope.vim](https://github.com/unblevable/quick-scope) but in Lua.
+<h1 align="center">👀 eyeliner.nvim</h1>
+<p align="center">
+Move faster with unique `f`/`F` indicators for each word on the line. Like <a href="https://github.com/unblevable/quick-scope">quick-scope</a> but in Lua.
+</p>
+<p align="center">
+  <b>🚧 WIP: The plugin is still in its early stages, feel free to create an issue or a PR!</b>
+</p>
 
-🚧 **WIP: The plugin is still in its early stages, feel free to create an issue or a PR!**
-
-## Demo
-In the demo, the orange letters indicate the unique letter in the word that you can jump to with `f`/`F` right away.
+## 🎬 Demo
+The orange letters indicate the unique letter in the word that you can jump to with `f`/`F` right away.
 Blue letters indicate that there is no unique letter in the word, but you can get to it with `f`/`F` and then a repeat with `;`.
 
 https://user-images.githubusercontent.com/40512164/178066018-0d3fa234-a5b5-4a41-a340-430e8c4c2739.mov
 
-## Install
+## 📦 Install
 Requirement: Neovim >= 0.7.0
 
 Using [vim-plug](https://github.com/junegunn/vim-plug):
@@ -23,7 +25,7 @@ Using [packer.nvim](https://github.com/wbthomason/packer.nvim):
 use 'jinh0/eyeliner.nvim'
 ```
 
-## Show highlights only after keypress
+## ⬇️ Show highlights only after keypress
 If you prefer to have eyeliner's highlights shown only after you press `f`/`F`/`t`/`T`, set `highlight_on_key` to `true` in the setup function.
 
 In Lua:
@@ -45,7 +47,7 @@ https://user-images.githubusercontent.com/40512164/180614964-c1a63671-7fa8-438d-
 
 </details>
 
-## Highlight Colors
+## 🎨 Customize highlight colors
 You can customize the highlight colors and styles with the `EyelinerPrimary` and `EyelinerSecondary` highlight groups.
 
 For instance, if you wanted to make eyeliner.nvim more subtle by only using bold and underline, with no color,
@@ -76,7 +78,7 @@ vim.api.nvim_set_hl(0, 'EyelinerPrimary', { fg='#000000', bold = true, underline
 vim.api.nvim_set_hl(0, 'EyelinerSecondary', { fg='#ffffff', underline = true })
 ```
 
-### Update highlights when the colorscheme is changed
+### ♻️ Update highlights when the colorscheme is changed
 In Vimscript:
 ```vim
 autocmd ColorScheme * :highlight EyelinerPrimary ...
@@ -91,7 +93,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
 })
 ```
 
-## Commands
+## 📢 Commands
 Enable/disable/toggle:
 ```
 :EyelinerEnable
