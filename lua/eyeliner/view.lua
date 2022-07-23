@@ -26,8 +26,7 @@ end
 function M.enable()
   if M.enabled then return end
 
-  M.enabled = true
-
+  -- Set highlight colors
   M.set_hl_colors()
 
   local group_id = vim.api.nvim_create_augroup('Eyeliner', {})
@@ -38,31 +37,43 @@ function M.enable()
     end
   })
 
+  -- Enable different modes
   if config.opts.highlight_on_key then
     for _, key in ipairs({'f', 'F', 't', 'T'}) do
       vim.keymap.set({'n', 'v'}, key, function()
-        require('eyeliner.view').handle_hover()
-        local char = vim.fn.getcharstr()
-        vim.notify(vim.inspect(char))
+        local line = vim.api.nvim_get_current_line()
+        local cursor = vim.api.nvim_win_get_cursor(0)
 
-        -- Default behavior
-        vim.api.nvim_feedkeys(key, 'n', true)
-        vim.api.nvim_feedkeys(char, 'n', true)
+        y = cursor[1]
+        local x = cursor[2]
 
+        if key == 'f' or key == 't' then
+          M.traverse_one(line, cursor[2], 1)
+        else
+          M.traverse_one(line, cursor[2], -1)
+        end
 
-        -- char = vim.fn.getcharstr()
-        -- vim.notify(vim.inspect(char))
-        -- vim.api.nvim_feedkeys(char, 'n', true)
-        
+        -- Draw fake cursor, since getcharstr() will move the real cursor
+        -- down in the command line
+        vim.api.nvim_buf_add_highlight(0, ns_id, 'Cursor', cursor[1] - 1, cursor[2], cursor[2] + 1)
+
+        -- :redraw necessary to show new highlights
+        vim.cmd([[ :redraw ]])
+
+        -- Get user's character, but use pcall() since
+        -- the user may throw a <c-c> which will cause an
+        -- error with getcharstr()
+        pcall(function()
+          local char = vim.fn.getcharstr()
+
+          -- Default behavior
+          vim.api.nvim_feedkeys(key, 'n', true)
+          vim.api.nvim_feedkeys(char, 'n', true)
+        end)
+
+        return require('eyeliner.view').clear_cursor_highlight()
       end)
     end
-
-    vim.api.nvim_create_autocmd({'BufWritePost', 'CursorMoved', 'WinScrolled', 'InsertEnter'}, {
-      group = group_id,
-      callback = function()
-        return require('eyeliner.view').clear_cursor_highlight()
-      end
-    })
   else
     vim.api.nvim_create_autocmd({'BufReadPost', 'CursorMoved', 'WinScrolled'}, {
       group = group_id,
@@ -71,12 +82,21 @@ function M.enable()
       end
     })
   end
+
+  M.enabled = true
 end
 
 function M.disable()
   if not M.enabled then return end
 
-  M.clear_prev_highlight()
+  if config.opts.highlight_on_key then
+    for _, key in ipairs({'f', 'F', 't', 'T'}) do
+      vim.keymap.del({'n', 'v'}, key)
+    end
+  else
+    M.clear_prev_highlight()
+  end
+
   vim.api.nvim_del_augroup_by_name('Eyeliner')
 
   M.enabled = false
@@ -147,7 +167,7 @@ end
 --- @param x number
 --- @param dir number (1 = right, -1 = left)
 --- {{{
-local function traverse_one(str, x, dir)
+function M.traverse_one(str, x, dir)
   local start = x
   local stop = (dir == 1) and #str or 1
 
@@ -215,8 +235,8 @@ end
 --- @param line string
 --- @param x number
 function M.traverse(line, x)
-  traverse_one(line, x, -1)
-  traverse_one(line, x, 1)
+  M.traverse_one(line, x, -1)
+  M.traverse_one(line, x, 1)
 end
 
 return M
