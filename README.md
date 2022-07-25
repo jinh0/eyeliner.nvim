@@ -29,7 +29,7 @@ If you prefer to have eyeliner's highlights shown only after you press `f`/`F`/`
 In Lua:
 ```lua
 use {
-  '~/dev/eyeliner.nvim',
+  'jinh0/eyeliner.nvim',
   config = function()
     require'eyeliner'.setup {
       highlight_on_key = true
