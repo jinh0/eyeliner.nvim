@@ -1,14 +1,12 @@
-# eyeliner.nvim
+# 👀 eyeliner.nvim
 
 Move faster with unique `f`/`F` indicators for each word on the line. Like [quick-scope](https://github.com/unblevable/quick-scope), but in Lua.
 
-**WIP: The plugin is still in its early stages, feel free to create an issue or a PR!**
+![demo](https://user-images.githubusercontent.com/40512164/178066018-0d3fa234-a5b5-4a41-a340-430e8c4c2739.mov)
 
-## Demo
 The orange letters indicate the unique letter in the word that you can jump to with `f`/`F` right away.
 Blue letters indicate that there is no unique letter in the word, but you can get to it with `f`/`F` and then a repeat with `;`.
 
-https://user-images.githubusercontent.com/40512164/178066018-0d3fa234-a5b5-4a41-a340-430e8c4c2739.mov
 
 ## Installation
 Requirement: Neovim >= 0.7.0
@@ -41,7 +39,7 @@ use {
 <details>
 <summary>Demo</summary>
 
-https://user-images.githubusercontent.com/40512164/180614964-c1a63671-7fa8-438d-ad4f-c90079adf098.mov
+![demo-keypress](https://user-images.githubusercontent.com/40512164/180614964-c1a63671-7fa8-438d-ad4f-c90079adf098.mov)
 
 </details>
 
