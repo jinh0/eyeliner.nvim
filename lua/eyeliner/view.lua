@@ -17,11 +17,12 @@ local ns_id = vim.api.nvim_create_namespace('eyeliner')
 
 function M.set_hl_colors()
   local primary_color = vim.api.nvim_get_hl_by_name('Constant', true)
-  local secondary_color = vim.api.nvim_get_hl_by_name('Define', true)
-
   vim.api.nvim_set_hl(0, 'EyelinerPrimary', { fg = primary_color.foreground, default = true })
+
+  local secondary_color = vim.api.nvim_get_hl_by_name('Define', true)
   vim.api.nvim_set_hl(0, 'EyelinerSecondary', { fg = secondary_color.foreground, default = true })
 end
+
 
 function M.enable()
   if M.enabled then return end
@@ -45,7 +46,7 @@ function M.enable()
         local cursor = vim.api.nvim_win_get_cursor(0)
 
         y = cursor[1]
-        local x = cursor[2]
+        -- local x = cursor[2]
 
         if key == 'f' or key == 't' then
           M.traverse_one(line, cursor[2], 1)
@@ -67,13 +68,55 @@ function M.enable()
           local char = vim.fn.getcharstr()
 
           -- Default behavior
+
+
           vim.api.nvim_feedkeys(key, 'n', true)
           vim.api.nvim_feedkeys(char, 'n', true)
         end)
 
         return require('eyeliner.view').clear_cursor_highlight()
       end)
+
+      for _, operator in ipairs({'d', 'y'}) do
+        vim.keymap.set({'n'}, operator .. key, function()
+          local line = vim.api.nvim_get_current_line()
+          local cursor = vim.api.nvim_win_get_cursor(0)
+
+          y = cursor[1]
+          -- local x = cursor[2]
+
+          if key == 'f' or key == 't' then
+            M.traverse_one(line, cursor[2], 1)
+          else
+            M.traverse_one(line, cursor[2], -1)
+          end
+
+          -- Draw fake cursor, since getcharstr() will move the real cursor
+          -- down in the command line
+          vim.api.nvim_buf_add_highlight(0, ns_id, 'Cursor', cursor[1] - 1, cursor[2], cursor[2] + 1)
+
+          -- :redraw necessary to show new highlights
+          vim.cmd([[ :redraw ]])
+
+          -- Get user's character, but use pcall() since
+          -- the user may throw a <c-c> which will cause an
+          -- error with getcharstr()
+          pcall(function()
+            local char = vim.fn.getcharstr()
+
+            -- Default behavior
+
+            vim.api.nvim_feedkeys(operator, 'n', true)
+            vim.api.nvim_feedkeys(key, 'n', true)
+            vim.api.nvim_feedkeys(char, 'n', true)
+          end)
+
+          return require('eyeliner.view').clear_cursor_highlight()
+        end)
+      end
+
     end
+
   else
     vim.api.nvim_create_autocmd({'BufReadPost', 'CursorMoved', 'WinScrolled'}, {
       group = group_id,
