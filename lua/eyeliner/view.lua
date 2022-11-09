@@ -41,7 +41,7 @@ function M.enable()
   -- Enable different modes
   if config.opts.highlight_on_key then
     for _, key in ipairs({'f', 'F', 't', 'T'}) do
-      vim.keymap.set({'n', 'v'}, key, function()
+      vim.keymap.set({'n', 'x'}, key, function()
         local line = vim.api.nvim_get_current_line()
         local cursor = vim.api.nvim_win_get_cursor(0)
 
@@ -134,7 +134,7 @@ function M.disable()
 
   if config.opts.highlight_on_key then
     for _, key in ipairs({'f', 'F', 't', 'T'}) do
-      vim.keymap.del({'n', 'v'}, key)
+      vim.keymap.del({'n', 'x'}, key)
     end
   else
     M.clear_prev_highlight()
