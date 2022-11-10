@@ -1,19 +1,11 @@
--- Configuration
-local M = {}
-
-local defaults = {
-  highlight_on_key = false,
-  debug = false
-}
-
-M.opts = defaults
-
-M.setup = function(opt)
-  M.opts = vim.tbl_deep_extend('force', {}, defaults, opt or {})
-
-  if M.opts.debug then
-    vim.notify("DEBUG: " .. vim.inspect(M.opts))
+local opts = {debug = false, highlight_on_key = false}
+local function setup(user)
+  local merged = vim.tbl_deep_extend("force", {}, opts, (user or {}))
+  if (merged.debug == true) then
+    vim.notify(vim.inspect(merged))
+  else
   end
+  opts = merged
+  return nil
 end
-
-return M
+return {setup = setup, opts = defaults}

@@ -1,6 +1,1 @@
-(fn enable []
-  (print "Enabled!"))
-
-(fn disable [] (print "Disabled!"))
-
-{: enable}
+{:setup (. (require "eyeliner.config") :setup)}
