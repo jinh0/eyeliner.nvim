@@ -69,7 +69,7 @@ function M.enable()
 
           -- Default behavior
           vim.api.nvim_feedkeys(key .. char, 'in', true)
-       end)
+        end)
 
         return require('eyeliner.view').clear_cursor_highlight()
       end)
