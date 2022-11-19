@@ -68,11 +68,8 @@ function M.enable()
           local char = vim.fn.getcharstr()
 
           -- Default behavior
-
-
-          vim.api.nvim_feedkeys(key, 'n', true)
-          vim.api.nvim_feedkeys(char, 'n', true)
-        end)
+          vim.api.nvim_feedkeys(key .. char, 'in', true)
+       end)
 
         return require('eyeliner.view').clear_cursor_highlight()
       end)
