@@ -11,12 +11,22 @@ end
 local function set_hl(name, color)
   return vim.api.nvim_set_hl(0, name, {fg = color, default = true})
 end
+local function str__3elist(str)
+  local tbl = {}
+  for i = 1, #str do
+    table.insert(tbl, str:sub(i, i))
+  end
+  return tbl
+end
+str__3elist("asdf")
 local function apply_eyeliner(locations)
   return vim.notify("todo")
 end
 local function traverse(line, x)
-  for i = (x + 1), #line do
-    print(line:sub(i, i))
+  local freqs = {}
+  local line0 = str__3elist(line)
+  for i = (x + 1), #line0 do
+    print((line0)[i])
   end
   return nil
 end

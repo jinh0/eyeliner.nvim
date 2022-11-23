@@ -4,7 +4,8 @@
 
 (fn setup [user]
   (let [merged (vim.tbl_deep_extend "force" {} opts (or user {}))]
-    (if (= merged.debug true) (vim.notify (vim.inspect merged)))
-    (set opts merged)))
-    
-{: setup :opts defaults}
+    (set opts merged)
+    (if (= opts true)
+        (vim.notify (vim.inspect opts)))))
+
+{: setup : opts}

@@ -13,6 +13,16 @@
 (fn set-hl [name color]
   (vim.api.nvim_set_hl 0 name {:fg color :default true}))
 
+(fn str->list [str]
+  (let [tbl {}]
+    (for [i 1 (# str)]
+      (table.insert tbl (str:sub i i)))
+    tbl))
+
+(str->list "asdf")
+; (icollect [i s (ipairs (str->list "asdf"))]
+  ; {:i i : s})
+
 
 ;; Sub-tasks
 
@@ -21,8 +31,10 @@
 
 ;; traverse through right
 (fn traverse [line x]
-  (for [i (+ x 1) (# line)]
-    (print (line:sub i i))))
+  (let [freqs {}
+        line (str->list line)]
+    (for [i (+ x 1) (# line)]
+      (print (. line i)))))
 
 (traverse
   (get-current-line)
@@ -52,7 +64,6 @@
 (fn enable-always-on []
   (set-autocmd ["CursorMoved" "WinScrolled" "BufReadPost"]
                {:group "Eyeliner"
-                ;; Remember to clear previous highlight!
                 :callback handle-hover}))
 
 (fn clear-eyeliner []
