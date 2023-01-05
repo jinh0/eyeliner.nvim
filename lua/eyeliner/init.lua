@@ -1,1 +1,1 @@
-return {setup = (require("eyeliner.config")).setup}
+return {setup = (require("eyeliner.config")).setup, enable = (require("eyeliner.main")).enable}

@@ -1,21 +1,20 @@
-local M = {}
-
-local alphas = {
-  a = true, b = true, c = true, d = true, e = true, f = true, g = true,
-  h = true, i = true, j = true, k = true, l = true, m = true, n = true,
-  o = true, p = true, q = true, r = true, s = true, t = true, u = true,
-  v = true, w = true, x = true, y = true, z = true,
-  A = true, B = true, C = true, D = true, E = true, F = true, G = true,
-  H = true, I = true, J = true, K = true, L = true, M = true, N = true,
-  O = true, P = true, Q = true, R = true, S = true, T = true, U = true,
-  V = true, W = true, X = true, Y = true, Z = true,
-}
-
---- check if char is an alphabetical character
---- @param c string
---- @return boolean
-function M.is_alpha(c)
-  return alphas[c]
+local set_autocmd = vim.api.nvim_create_autocmd
+local del_augroup = vim.api.nvim_del_augroup_by_name
+local create_augroup = vim.api.nvim_create_augroup
+local get_current_line = vim.api.nvim_get_current_line
+local function get_cursor()
+  return vim.api.nvim_win_get_cursor(0)
 end
-
-return M
+local function get_hl(name)
+  return vim.api.nvim_get_hl_by_name(name, true)
+end
+local function set_hl(name, color)
+  return vim.api.nvim_set_hl(0, name, {fg = color, default = true})
+end
+local function add_hl(ns_id, x)
+  local _let_1_ = get_cursor()
+  local y = _let_1_[1]
+  local _ = _let_1_[2]
+  return vim.api.nvim_buf_add_highlight(0, ns_id, "EyelinerPrimary", (y - 1), (x - 1), x)
+end
+return {["set-autocmd"] = set_autocmd, ["del-augroup"] = del_augroup, ["create-augroup"] = create_augroup, ["get-current-line"] = get_current_line, ["get-cursor"] = get_cursor, ["get-hl"] = get_hl, ["set-hl"] = set_hl, ["add-hl"] = add_hl}

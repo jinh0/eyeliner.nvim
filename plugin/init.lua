@@ -1,1 +1,2 @@
-require('eyeliner').setup({ highlight_on_key = true, debug = true })
+require('eyeliner').setup({ highlight_on_key = false, debug = true })
+-- require('eyeliner').enable()
