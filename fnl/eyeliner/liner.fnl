@@ -1,8 +1,7 @@
-(fn str->list [str]
-  (let [tbl {}]
-    (for [i 1 (# str)]
-      (table.insert tbl (str:sub i i)))
-    tbl))
+;; [liner.fnl]
+;; Main algorithm for calculating which characters to highlight
+
+(local {: str->list} (require "eyeliner.string"))
 
 (fn get-scores [line x]
   (let [freqs {}
@@ -13,9 +12,11 @@
         (if (= (. freqs char) nil)
             (tset freqs char 1)
             (tset freqs char (+ 1 (. freqs char))))
-        (table.insert scores {:x i :s (. freqs char) :c char})))
+        (table.insert scores
+                      {:x i
+                       :score (. freqs char)
+                       :char char})))
     scores))
 
 
-{: str->list
- : get-scores}
+{: get-scores}

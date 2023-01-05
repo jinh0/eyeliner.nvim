@@ -1,4 +1,6 @@
-;; Utility functions
+;; [utils.fnl]
+;; Shorthand versions of vim API
+
 (local set-autocmd vim.api.nvim_create_autocmd)
 (local del-augroup vim.api.nvim_del_augroup_by_name)
 (local create-augroup vim.api.nvim_create_augroup)
@@ -16,6 +18,7 @@
 (fn add-hl [ns-id x]
   (let [[y _] (get-cursor)]
     (vim.api.nvim_buf_add_highlight 0 ns-id "EyelinerPrimary" (- y 1) (- x 1) x)))
+
 
 {: set-autocmd
  : del-augroup

@@ -1,10 +1,5 @@
-local function str__3elist(str)
-  local tbl = {}
-  for i = 1, #str do
-    table.insert(tbl, str:sub(i, i))
-  end
-  return tbl
-end
+local _local_1_ = require("eyeliner.string")
+local str__3elist = _local_1_["str->list"]
 local function get_scores(line, x)
   local freqs = {}
   local scores = {}
@@ -16,8 +11,8 @@ local function get_scores(line, x)
     else
       freqs[char] = (1 + freqs[char])
     end
-    table.insert(scores, {x = i, s = freqs[char], c = char})
+    table.insert(scores, {x = i, score = freqs[char], char = char})
   end
   return scores
 end
-return {["str->list"] = str__3elist, ["get-scores"] = get_scores}
+return {["get-scores"] = get_scores}
