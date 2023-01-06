@@ -10,7 +10,7 @@ local function enable()
     local opts = _let_1_["opts"]
     utils["create-augroup"]("Eyeliner", {})
     shared["enable-highlights"]()
-    if opts["highlight-on-key"] then
+    if opts.highlight_on_key then
       on_key.enable()
     else
       always_on.enable()
@@ -27,9 +27,12 @@ local function enable()
 end
 local function disable()
   if enabled then
-    shared["remove-keybinds"]()
     shared["clear-eyeliner"]()
     utils["del-augroup"]("Eyeliner")
+    if opts.highlight_on_key then
+      on_key["remove-keybinds"]()
+    else
+    end
     if opts.debug then
       vim.notify("Disabled eyeliner.nvim")
     else

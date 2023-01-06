@@ -4,5 +4,12 @@
 (fn enable []
   (vim.notify "todo"))
 
+;; TODO
+(fn remove-keybinds []
+  (let [{: opts} (require "eyeliner.config")]
+    (if opts.highlight-on-key
+        (vim.notify "todo: remove-keybinds"))))
 
-{: enable}
+
+{: enable
+ : remove-keybinds}

@@ -13,12 +13,6 @@
                        {:callback enable-highlights :group "Eyeliner"}))) 
 
 ;; TODO
-(fn remove-keybinds []
-  (let [opts (. (require "eyeliner.config") :opts)]
-    (if opts.highlight-on-key
-        (print "todo: remove-keybinds"))))
-
-;; TODO
 (fn apply-eyeliner [locations] nil)
 
 ;; TODO
@@ -27,6 +21,5 @@
 
 
 {: enable-highlights
- : remove-keybinds
  : apply-eyeliner
  : clear-eyeliner}

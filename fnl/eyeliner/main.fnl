@@ -18,26 +18,24 @@
 (fn enable []
   (if (not enabled)
       (let [{: opts} (require :eyeliner.config)]
-        (do
-          (utils.create-augroup "Eyeliner" {})
-          (shared.enable-highlights)
-          (if opts.highlight-on-key
-              (on-key.enable)
-              (always-on.enable))
-          (if opts.debug (vim.notify "Enabled eyeliner.nvim"))
-          (set enabled true)
-          true))
+        (do (utils.create-augroup "Eyeliner" {})
+            (shared.enable-highlights)
+            (if opts.highlight_on_key
+                (on-key.enable)
+                (always-on.enable))
+            (if opts.debug (vim.notify "Enabled eyeliner.nvim"))
+            (set enabled true)
+            true))
       false))
       
 (fn disable []
   (if enabled
-      (do 
-        (shared.remove-keybinds) ; is this shared?
-        (shared.clear-eyeliner)
-        (utils.del-augroup "Eyeliner")
-        (if opts.debug (vim.notify "Disabled eyeliner.nvim"))
-        (set enabled false)
-        true)
+      (do (shared.clear-eyeliner)
+          (utils.del-augroup "Eyeliner")
+          (if opts.highlight_on_key (on-key.remove-keybinds))
+          (if opts.debug (vim.notify "Disabled eyeliner.nvim"))
+          (set enabled false)
+          true)
       false))
 
 (fn toggle []
