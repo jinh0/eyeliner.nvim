@@ -17,10 +17,10 @@ local function handle_hover()
   local y = _let_2_[1]
   local x = _let_2_[2]
   local to_apply = traverse(line, x)
-  return apply_eyeliner(to_apply)
+  apply_eyeliner(to_apply)
+  return nil
 end
 local function enable()
-  vim.notify("always on")
   return utils["set-autocmd"]({"CursorMoved", "WinScrolled", "BufReadPost"}, {callback = handle_hover, group = "Eyeliner"})
 end
 return {enable = enable}

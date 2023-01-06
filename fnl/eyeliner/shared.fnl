@@ -12,7 +12,6 @@
     (utils.set-autocmd "ColorScheme"
                        {:callback enable-highlights :group "Eyeliner"}))) 
 
-
 ;; TODO
 (fn remove-keybinds []
   (let [opts (. (require "eyeliner.config") :opts)]
