@@ -7,27 +7,12 @@
       (table.insert tbl (str:sub i i)))
     tbl))
 
-(local dividers
-       {"(" true
-        ")" true
-        "[" true
-        "]" true
-        "{" true
-        "}" true
-        ":" true
-        "." true
-        "," true
-        "?" true
-        "!" true
-        ";" true
-        "-" true
-        "_" true
-        "|" true
-        " " true
-        "#" true})
+;; Checks if a string contains only alphanumeric symbols
+(fn alphanumeric? [char]
+  (char:match "%w"))
 
-(fn divider? [char]
-  (= (. dividers char) true))
+(fn alphabetic? [char]
+  (char:match "[A-Za-z]"))
 
 
-{: str->list : divider?}
+{: str->list : alphanumeric? : alphabetic?}

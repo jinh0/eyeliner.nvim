@@ -5,8 +5,10 @@ local function str__3elist(str)
   end
   return tbl
 end
-local dividers = {["("] = true, [")"] = true, ["["] = true, ["]"] = true, ["{"] = true, ["}"] = true, [":"] = true, ["."] = true, [","] = true, ["?"] = true, ["!"] = true, [";"] = true, ["-"] = true, _ = true, ["|"] = true, [" "] = true, ["#"] = true}
-local function divider_3f(char)
-  return (dividers[char] == true)
+local function alphanumeric_3f(char)
+  return char:match("%w")
 end
-return {["str->list"] = str__3elist, ["divider?"] = divider_3f}
+local function alphabetic_3f(char)
+  return char:match("[A-Za-z]")
+end
+return {["str->list"] = str__3elist, ["alphanumeric?"] = alphanumeric_3f, ["alphabetic?"] = alphabetic_3f}

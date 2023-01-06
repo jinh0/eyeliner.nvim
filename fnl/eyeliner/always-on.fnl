@@ -4,25 +4,19 @@
 (local liner (require :eyeliner.liner))
 (local utils (require :eyeliner.utils))
 (local {: apply-eyeliner} (require :eyeliner.shared))
-
-;; TODO
-(fn hl-words [scores]
-  (each [idx val (ipairs scores)]
-    nil)
-  scores)
     
 ;; TODO: Only traverses through right
+;; returns list of locations to apply eyeliner to
 (fn traverse [line x]
-  (let [scores (liner.get-scores line x)]
-    (hl-words scores)))
+  nil)
 
 ;; TODO
 (fn handle-hover []
   (let [line (utils.get-current-line)
         [y x] (utils.get-cursor)
-        to-apply (traverse line x)]
-    (apply-eyeliner to-apply)
-    nil))
+        locations (traverse line x)]
+    ; (apply-eyeliner locations)))
+    locations))
 
 ;; Set Eyeliner to always-on mode
 (fn enable []
