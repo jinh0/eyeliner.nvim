@@ -5,4 +5,8 @@ local function str__3elist(str)
   end
   return tbl
 end
-return {["str->list"] = str__3elist}
+local dividers = {["("] = true, [")"] = true, ["["] = true, ["]"] = true, ["{"] = true, ["}"] = true, [":"] = true, ["."] = true, [","] = true, ["?"] = true, ["!"] = true, [";"] = true, ["-"] = true, _ = true, ["|"] = true, [" "] = true, ["#"] = true}
+local function divider_3f(char)
+  return (dividers[char] == true)
+end
+return {["str->list"] = str__3elist, ["divider?"] = divider_3f}

@@ -7,5 +7,27 @@
       (table.insert tbl (str:sub i i)))
     tbl))
 
+(local dividers
+       {"(" true
+        ")" true
+        "[" true
+        "]" true
+        "{" true
+        "}" true
+        ":" true
+        "." true
+        "," true
+        "?" true
+        "!" true
+        ";" true
+        "-" true
+        "_" true
+        "|" true
+        " " true
+        "#" true})
 
-{: str->list}
+(fn divider? [char]
+  (= (. dividers char) true))
+
+
+{: str->list : divider?}
