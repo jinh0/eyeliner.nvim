@@ -17,13 +17,14 @@
 ;; TODO: use pcall
 (fn enable []
   (if (not enabled)
-      (let [opts (. (require :eyeliner.config) :opts)]
+      (let [{: opts} (require :eyeliner.config)]
         (do
           (utils.create-augroup "Eyeliner" {})
           (shared.enable-highlights)
           (if opts.highlight-on-key
               (on-key.enable)
               (always-on.enable))
+          (if opts.debug (vim.notify "Enabled eyeliner.nvim"))
           (set enabled true)
           true))
       false))
@@ -34,7 +35,9 @@
         (shared.remove-keybinds) ; is this shared?
         (shared.clear-eyeliner)
         (utils.del-augroup "Eyeliner")
-        (set enabled false))
+        (if opts.debug (vim.notify "Disabled eyeliner.nvim"))
+        (set enabled false)
+        true)
       false))
 
 (fn toggle []

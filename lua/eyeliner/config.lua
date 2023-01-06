@@ -1,11 +1,8 @@
-local opts = {debug = false, highlight_on_key = false}
+local opts = {highlight_on_key = false, debug = false}
 local function setup(user)
   local merged = vim.tbl_deep_extend("force", {}, opts, (user or {}))
-  opts = merged
-  if (opts == true) then
-    return vim.notify(vim.inspect(opts))
-  else
-    return nil
-  end
+  opts.highlight_on_key = merged.highlight_on_key
+  opts.debug = merged.debug
+  return nil
 end
 return {setup = setup, opts = opts}
