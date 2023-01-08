@@ -11,11 +11,11 @@ end
 local function set_hl(name, color)
   return vim.api.nvim_set_hl(0, name, {fg = color, default = true})
 end
-local function add_hl(ns_id, x)
+local function add_hl(ns_id, hl_group, x)
   local _let_1_ = get_cursor()
   local y = _let_1_[1]
   local _ = _let_1_[2]
-  return vim.api.nvim_buf_add_highlight(0, ns_id, "EyelinerPrimary", (y - 1), (x - 1), x)
+  return vim.api.nvim_buf_add_highlight(0, ns_id, hl_group, (y - 1), x, (x + 1))
 end
 local function map(f, list)
   local tbl_15_auto = {}

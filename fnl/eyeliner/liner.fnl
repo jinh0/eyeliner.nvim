@@ -11,7 +11,7 @@
 ;; about every character's x-coordinate and its cumulative frequency.
 ;; Order of characters in the string is maintained in the new list of tokens.
 ;;
-;; @returns Token[]
+;; Returns Token[]
 (fn get-tokens [line x dir]
   ;; Iterate through the string line with the right step depending on the direction
   (local go-right? (= dir :right))
@@ -59,7 +59,7 @@
 ;; is its own list of tokens (i.e., Token[]).
 ;; Note: Empty words are discarded
 ;;
-;; @returns Token[][]
+;; Returns Token[][]
 (fn tokens->words [tokens]
   (let [words []
         not-empty? (λ [word] (not= (length word) 0))]
@@ -73,7 +73,7 @@
     (filter not-empty? words)))
 
 ;; Get the tokens to highlight (to put eyeliner on)
-;; @returns Token[]
+;; Returns Token[]
 (fn get-locations [line x dir] ; dir = direction (:left | :right)
   ;; Get token with minimum frequency in a word
   (fn min-token [word]

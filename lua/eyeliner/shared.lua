@@ -7,10 +7,10 @@ local function enable_highlights()
   utils["set-hl"]("EyelinerSecondary", secondary.foreground)
   return utils["set-autocmd"]("ColorScheme", {callback = enable_highlights, group = "Eyeliner"})
 end
-local function apply_eyeliner(y, _1_)
-  local _arg_2_ = _1_
-  local x = _arg_2_["x"]
-  local freq = _arg_2_["freq"]
+local function apply_eyeliner(y, token)
+  local _let_1_ = token
+  local x = _let_1_["x"]
+  local freq = _let_1_["freq"]
   local hl_group
   if (freq == 1) then
     hl_group = "EyelinerPrimary"
@@ -26,4 +26,4 @@ local function clear_eyeliner(y)
     return vim.api.nvim_buf_clear_namespace(0, ns_id, (y - 1), y)
   end
 end
-return {["enable-highlights"] = enable_highlights, ["apply-eyeliner"] = apply_eyeliner, ["clear-eyeliner"] = clear_eyeliner}
+return {["enable-highlights"] = enable_highlights, ["apply-eyeliner"] = apply_eyeliner, ["clear-eyeliner"] = clear_eyeliner, ["ns-id"] = ns_id}

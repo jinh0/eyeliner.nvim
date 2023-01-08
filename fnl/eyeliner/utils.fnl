@@ -17,9 +17,9 @@
 (fn set-hl [name color]
   (vim.api.nvim_set_hl 0 name {:fg color :default true}))
 
-(fn add-hl [ns-id x]
+(fn add-hl [ns-id hl-group x]
   (let [[y _] (get-cursor)]
-    (vim.api.nvim_buf_add_highlight 0 ns-id "EyelinerPrimary" (- y 1) (- x 1) x)))
+    (vim.api.nvim_buf_add_highlight 0 ns-id hl-group (- y 1) x (+ x 1))))
 
 ;;; Helper functions
 (fn map [f list]
