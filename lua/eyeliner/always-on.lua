@@ -12,19 +12,19 @@ local function handle_hover()
   local _let_4_ = utils["get-cursor"]()
   local y = _let_4_[1]
   local x = _let_4_[2]
-  local to_apply_left = get_locations(line, x, "left")
-  local to_apply_right = get_locations(line, x, "right")
+  local left = get_locations(line, x, "left")
+  local right = get_locations(line, x, "right")
   clear_eyeliner(prev_y)
   local function _5_(token)
     _G.assert((nil ~= token), "Missing argument token on fnl/eyeliner/always-on.fnl:21")
-    return apply_eyeliner(token.x, y, token.freq)
+    return apply_eyeliner(y, token)
   end
-  iter(_5_, to_apply_left)
+  iter(_5_, left)
   local function _6_(token)
     _G.assert((nil ~= token), "Missing argument token on fnl/eyeliner/always-on.fnl:22")
-    return apply_eyeliner(token.x, y, token.freq)
+    return apply_eyeliner(y, token)
   end
-  iter(_6_, to_apply_right)
+  iter(_6_, right)
   prev_y = y
   return nil
 end

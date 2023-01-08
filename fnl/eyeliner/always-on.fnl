@@ -15,11 +15,11 @@
 (fn handle-hover []
   (let [line (utils.get-current-line)
         [y x] (utils.get-cursor)
-        to-apply-left (get-locations line x :left)
-        to-apply-right (get-locations line x :right)]
+        left (get-locations line x :left)
+        right (get-locations line x :right)]
     (clear-eyeliner prev-y)
-    (iter (λ [token] (apply-eyeliner token.x y token.freq)) to-apply-left)
-    (iter (λ [token] (apply-eyeliner token.x y token.freq)) to-apply-right)
+    (iter (λ [token] (apply-eyeliner y token)) left)
+    (iter (λ [token] (apply-eyeliner y token)) right)
     (set prev-y y)))
 
 ;; Set Eyeliner to always-on mode

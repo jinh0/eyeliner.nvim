@@ -7,7 +7,10 @@ local function enable_highlights()
   utils["set-hl"]("EyelinerSecondary", secondary.foreground)
   return utils["set-autocmd"]("ColorScheme", {callback = enable_highlights, group = "Eyeliner"})
 end
-local function apply_eyeliner(x, y, freq)
+local function apply_eyeliner(y, _1_)
+  local _arg_2_ = _1_
+  local x = _arg_2_["x"]
+  local freq = _arg_2_["freq"]
   local hl_group
   if (freq == 1) then
     hl_group = "EyelinerPrimary"

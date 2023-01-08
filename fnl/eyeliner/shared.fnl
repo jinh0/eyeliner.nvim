@@ -17,7 +17,7 @@
                        {:callback enable-highlights :group "Eyeliner"}))) 
 
 ;; TODO
-(fn apply-eyeliner [x y freq]
+(fn apply-eyeliner [y {: x : freq}]
   (let [hl-group (if (= freq 1) "EyelinerPrimary" "EyelinerSecondary")]
     (vim.api.nvim_buf_add_highlight 0 ns-id hl-group (- y 1) (- x 1) x)))
 
