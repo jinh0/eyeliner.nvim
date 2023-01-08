@@ -6,6 +6,7 @@ local _local_3_ = require("eyeliner.shared")
 local ns_id = _local_3_["ns-id"]
 local clear_eyeliner = _local_3_["clear-eyeliner"]
 local apply_eyeliner = _local_3_["apply-eyeliner"]
+local dim = _local_3_["dim"]
 local utils = require("eyeliner.utils")
 local _local_4_ = utils
 local iter = _local_4_["iter"]
@@ -31,11 +32,15 @@ local function handle_keypress(key, operator)
       dir = "left"
     end
     local to_apply = get_locations(line, x, dir)
-    local function _8_(token)
-      _G.assert((nil ~= token), "Missing argument token on fnl/eyeliner/on-key.fnl:26")
+    if opts.dim then
+      dim(y, x, dir)
+    else
+    end
+    local function _9_(token)
+      _G.assert((nil ~= token), "Missing argument token on fnl/eyeliner/on-key.fnl:27")
       return apply_eyeliner(y, token)
     end
-    iter(_8_, to_apply)
+    iter(_9_, to_apply)
     utils["add-hl"](ns_id, "Cursor", x)
     vim.cmd(":redraw")
     pcall(simulate_find)

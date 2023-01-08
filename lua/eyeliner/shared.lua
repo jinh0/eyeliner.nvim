@@ -3,8 +3,10 @@ local ns_id = vim.api.nvim_create_namespace("eyeliner")
 local function enable_highlights()
   local primary = utils["get-hl"]("Constant")
   local secondary = utils["get-hl"]("Define")
+  local dimmed = utils["get-hl"]("Comment")
   utils["set-hl"]("EyelinerPrimary", primary.foreground)
   utils["set-hl"]("EyelinerSecondary", secondary.foreground)
+  utils["set-hl"]("EyelinerDimmed", dimmed.foreground)
   return utils["set-autocmd"]("ColorScheme", {callback = enable_highlights, group = "Eyeliner"})
 end
 local function apply_eyeliner(y, token)
@@ -26,4 +28,20 @@ local function clear_eyeliner(y)
     return vim.api.nvim_buf_clear_namespace(0, ns_id, (y - 1), y)
   end
 end
-return {["enable-highlights"] = enable_highlights, ["apply-eyeliner"] = apply_eyeliner, ["clear-eyeliner"] = clear_eyeliner, ["ns-id"] = ns_id}
+local function dim(y, x, dir)
+  local line = utils["get-current-line"]()
+  local start
+  if (dir == "right") then
+    start = (x + 1)
+  else
+    start = 0
+  end
+  local _end
+  if (dir == "right") then
+    _end = #line
+  else
+    _end = (x - 1)
+  end
+  return vim.api.nvim_buf_add_highlight(0, ns_id, "EyelinerDimmed", (y - 1), start, _end)
+end
+return {["enable-highlights"] = enable_highlights, ["apply-eyeliner"] = apply_eyeliner, ["clear-eyeliner"] = clear_eyeliner, dim = dim, ["ns-id"] = ns_id}

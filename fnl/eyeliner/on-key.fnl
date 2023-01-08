@@ -3,7 +3,7 @@
 
 (local {: get-locations} (require :eyeliner.liner))
 (local {: opts} (require :eyeliner.config))
-(local {: ns-id : clear-eyeliner : apply-eyeliner} (require :eyeliner.shared))
+(local {: ns-id : clear-eyeliner : apply-eyeliner : dim} (require :eyeliner.shared))
 (local utils (require :eyeliner.utils))
 (local {: iter} utils)
 
@@ -23,6 +23,7 @@
           dir (if (or (= key "f") (= key "t")) :right :left)
           to-apply (get-locations line x dir)]
       ;; Apply eyeliner right after pressing key
+      (if opts.dim (dim y x dir))
       (iter (λ [token] (apply-eyeliner y token)) to-apply)
       ;; Draw fake cursor, since getcharstr() will move the real cursor away
       (utils.add-hl ns-id "Cursor" x)
@@ -46,9 +47,9 @@
 
 (fn remove-keybinds []
   (each [_ key (ipairs ["f" "F" "t" "T"])]
-    (vim.keymap.del ["n" "x"] key)
-    (each [_ operator (ipairs ["d" "y"])]
-      (vim.keymap.del ["n"] (.. operator key)))))
+     (vim.keymap.del ["n" "x"] key)
+     (each [_ operator (ipairs ["d" "y"])]
+       (vim.keymap.del ["n"] (.. operator key)))))
 
 
 {: enable

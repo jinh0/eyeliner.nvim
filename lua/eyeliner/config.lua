@@ -1,4 +1,4 @@
-local opts = {highlight_on_key = false, debug = false}
+local opts = {debug = false, highlight_on_key = false, dim = false}
 local function setup(user)
   local _let_1_ = require("eyeliner.main")
   local enabled = _let_1_["enabled"]
@@ -10,6 +10,7 @@ local function setup(user)
   else
   end
   opts.highlight_on_key = merged.highlight_on_key
+  opts.dim = merged.dim
   opts.debug = merged.debug
   return enable()
 end
