@@ -6,7 +6,6 @@
 
 ;; type Token = { x: number, freq: number, char: string }
 
-;; TODO: This is only for going right
 ;; Converts the substring of the line from x onwards
 ;; into a list of tokens: Every token contains information
 ;; about every character's x-coordinate and its cumulative frequency.
@@ -16,6 +15,7 @@
 (fn get-tokens [line x dir]
   ;; Iterate through the string line with the right step depending on the direction
   (local go-right? (= dir :right))
+  (local step (if go-right? 1 -1))
 
   ;; Get the first x-coordinate to start reading tokens, i.e., "proper".
   ;; The first proper coordinate is the first coordinate after the end
@@ -24,25 +24,36 @@
     (var idx (+ x 1)) ; start at x + 1 due to Lua indexing (starts with 1 not 0)
     (while (and (alphanumeric? (line:sub idx idx))
                 (if go-right? (<= idx (# line)) (>= idx 1)))
-      (set idx (+ idx (if go-right? 1 -1))))
+      (set idx (+ idx step)))
     idx)
+
+  ;; Reverse list helper function
+  (fn reversed [list]
+    (let [new-list []]
+      (for [idx (# list) 1 -1]
+        (table.insert new-list (. list idx)))
+      new-list))
 
   (let [freqs {}
         tokens []
         line (str->list line)
         first-proper (get-first-proper)
-        start (if go-right? (+ x 2) 1)
-        end (if go-right? (# line) x)]
-    (for [idx start end]
+        start (if go-right? (+ x 2) x)
+        end (if go-right? (# line) 1)]
+    (for [idx start end step]
       (let [char (. line idx)
             freq (. freqs char)]
         (if (= freq nil)
             (tset freqs char 1)
             (tset freqs char (+ 1 freq)))
         (table.insert tokens {:x idx :freq (. freqs char) : char})))
-    ;; We need to remove all the characters of the word the cursor is on
-    (filter (λ [token] (if go-right? (>= token.x first-proper) (<= token.x first-proper)))
-            tokens)))
+    ;; We need to remove all the characters of the word the cursor is on.
+    ;; Reverse the list if going left to prioritize earlier (more to the left) letters
+    (filter (λ [token]
+              (if go-right?
+                  (>= token.x first-proper)
+                  (<= token.x first-proper)))
+            (if go-right? tokens (reversed tokens)))))
 
 ;; Join a list of tokens into a list of words, where a word
 ;; is its own list of tokens (i.e., Token[]).
