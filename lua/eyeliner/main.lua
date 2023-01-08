@@ -2,12 +2,11 @@ local shared = require("eyeliner.shared")
 local always_on = require("eyeliner.always-on")
 local on_key = require("eyeliner.on-key")
 local utils = require("eyeliner.utils")
+local _local_1_ = require("eyeliner.config")
+local opts = _local_1_["opts"]
 local enabled = false
-local ns_id = vim.api.nvim_create_namespace("eyeliner")
 local function enable()
   if not enabled then
-    local _let_1_ = require("eyeliner.config")
-    local opts = _let_1_["opts"]
     utils["create-augroup"]("Eyeliner", {})
     shared["enable-highlights"]()
     if opts.highlight_on_key then
@@ -27,7 +26,6 @@ local function enable()
 end
 local function disable()
   if enabled then
-    shared["clear-eyeliner"]()
     utils["del-augroup"]("Eyeliner")
     if opts.highlight_on_key then
       on_key["remove-keybinds"]()

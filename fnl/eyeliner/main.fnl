@@ -5,32 +5,28 @@
 (local always-on (require :eyeliner.always-on))
 (local on-key (require :eyeliner.on-key))
 (local utils (require :eyeliner.utils))
+(local {: opts} (require :eyeliner.config))
 
 ;; We need to keep track of whether the plugin has been
 ;; enabled already or not
 (var enabled false)
 
-;; For syntax highlighting, we create a namespace which allows us
-;; to easily clear all Eyeliner-related highlights
-(var ns-id (vim.api.nvim_create_namespace "eyeliner"))
-
 ;; TODO: use pcall
 (fn enable []
   (if (not enabled)
-      (let [{: opts} (require :eyeliner.config)]
-        (do (utils.create-augroup "Eyeliner" {})
-            (shared.enable-highlights)
-            (if opts.highlight_on_key
-                (on-key.enable)
-                (always-on.enable))
-            (if opts.debug (vim.notify "Enabled eyeliner.nvim"))
-            (set enabled true)
-            true))
+      (do (utils.create-augroup "Eyeliner" {})
+          (shared.enable-highlights)
+          (if opts.highlight_on_key
+              (on-key.enable)
+              (always-on.enable))
+          (if opts.debug (vim.notify "Enabled eyeliner.nvim"))
+          (set enabled true)
+          true)
       false))
       
 (fn disable []
   (if enabled
-      (do (shared.clear-eyeliner)
+      (do ;(shared.clear-eyeliner)
           (utils.del-augroup "Eyeliner")
           (if opts.highlight_on_key (on-key.remove-keybinds))
           (if opts.debug (vim.notify "Disabled eyeliner.nvim"))

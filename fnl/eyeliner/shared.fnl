@@ -3,6 +3,10 @@
 
 (local utils (require :eyeliner.utils))
 
+;; For syntax highlighting, we create a namespace which allows us
+;; to easily clear all Eyeliner-related highlights
+(local ns-id (vim.api.nvim_create_namespace "eyeliner"))
+
 ;; Enable Eyeliner's syntax highlighting, and setup ColorScheme autocmd
 (fn enable-highlights []
   (let [primary (utils.get-hl "Constant")
@@ -13,11 +17,15 @@
                        {:callback enable-highlights :group "Eyeliner"}))) 
 
 ;; TODO
-(fn apply-eyeliner [locations] nil)
+(fn apply-eyeliner [x y freq]
+  (let [hl-group (if (= freq 1) "EyelinerPrimary" "EyelinerSecondary")]
+    (vim.api.nvim_buf_add_highlight 0 ns-id hl-group (- y 1) (- x 1) x)))
 
 ;; TODO
-(fn clear-eyeliner []
-  (vim.notify "todo: clear-eyeliner"))
+(fn clear-eyeliner [y]
+  (if (<= y 0)
+      (vim.api.nvim_buf_clear_namespace 0 ns-id 0 (+ y 1))
+      (vim.api.nvim_buf_clear_namespace 0 ns-id (- y 1) y)))
 
 
 {: enable-highlights
