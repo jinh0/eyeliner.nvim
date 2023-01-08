@@ -5,9 +5,12 @@
 
 (fn setup [user]
   ;; merged = union of default options and user's options
-  (let [merged (vim.tbl_deep_extend "force" {} opts (or user {}))]
+  (let [{: enabled : enable : disable} (require :eyeliner.main)
+        merged (vim.tbl_deep_extend "force" {} opts (or user {}))]
+    (if enabled (disable))
     (set opts.highlight_on_key merged.highlight_on_key)
-    (set opts.debug merged.debug)))
+    (set opts.debug merged.debug)
+    (enable)))
 
 
 {: setup : opts}
