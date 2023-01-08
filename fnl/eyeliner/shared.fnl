@@ -3,8 +3,8 @@
 
 (local utils (require :eyeliner.utils))
 
-;; For syntax highlighting, we create a namespace which allows us
-;; to easily clear all Eyeliner-related highlights
+;; For syntax highlighting, we create a namespace to group all
+;; Eyeliner-related highlights
 (local ns-id (vim.api.nvim_create_namespace "eyeliner"))
 
 ;; Enable Eyeliner's syntax highlighting, and setup ColorScheme autocmd

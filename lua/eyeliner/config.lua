@@ -1,4 +1,4 @@
-local opts = {debug = false, highlight_on_key = false}
+local opts = {highlight_on_key = false, debug = false}
 local function setup(user)
   local _let_1_ = require("eyeliner.main")
   local enabled = _let_1_["enabled"]

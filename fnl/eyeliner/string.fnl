@@ -7,7 +7,6 @@
       (table.insert tbl (str:sub i i)))
     tbl))
 
-;; Checks if a string contains only alphanumeric symbols
 (fn alphanumeric? [char]
   (char:match "%w"))
 

@@ -1,14 +1,12 @@
 ;;; [main.fnl] Main functions: enable, disable, toggle
 
-;; Imports
 (local shared (require :eyeliner.shared))
 (local always-on (require :eyeliner.always-on))
 (local on-key (require :eyeliner.on-key))
 (local utils (require :eyeliner.utils))
 (local {: opts} (require :eyeliner.config))
 
-;; We need to keep track of whether the plugin has been
-;; enabled already or not
+;; We need to keep track of whether the plugin has been enabled already or not
 (var enabled false)
 
 ;; TODO: use pcall

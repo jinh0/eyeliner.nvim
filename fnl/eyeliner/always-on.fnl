@@ -31,7 +31,6 @@
   (utils.set-autocmd ["InsertEnter"]
                      {:callback (λ [] (clear-eyeliner prev-y))
                       :group "Eyeliner"}))
-                      
 
 
 {: enable}
