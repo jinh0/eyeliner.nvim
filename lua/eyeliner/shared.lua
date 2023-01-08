@@ -40,7 +40,7 @@ local function dim(y, x, dir)
   if (dir == "right") then
     _end = #line
   else
-    _end = (x - 1)
+    _end = x
   end
   return vim.api.nvim_buf_add_highlight(0, ns_id, "EyelinerDimmed", (y - 1), start, _end)
 end

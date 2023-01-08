@@ -33,7 +33,7 @@
 (fn dim [y x dir]
   (let [line (utils.get-current-line)
         start (if (= dir :right) (+ x 1) 0)
-        end (if (= dir :right) (# line) (- x 1))]
+        end (if (= dir :right) (# line) x)]
     (vim.api.nvim_buf_add_highlight 0 ns-id "EyelinerDimmed" (- y 1) start end)))
 
 
