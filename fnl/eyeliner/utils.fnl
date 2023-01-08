@@ -7,6 +7,7 @@
 (local create-augroup vim.api.nvim_create_augroup)
 (local get-current-line vim.api.nvim_get_current_line)
 
+;; Returns a tuple [y x]
 (fn get-cursor []
   (vim.api.nvim_win_get_cursor 0))
 

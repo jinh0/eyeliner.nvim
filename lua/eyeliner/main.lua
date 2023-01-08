@@ -26,6 +26,12 @@ local function enable()
 end
 local function disable()
   if enabled then
+    do
+      local _let_5_ = utils["get-cursor"]()
+      local y = _let_5_[1]
+      local _ = _let_5_[2]
+      shared["clear-eyeliner"](y)
+    end
     utils["del-augroup"]("Eyeliner")
     if opts.highlight_on_key then
       on_key["remove-keybinds"]()
