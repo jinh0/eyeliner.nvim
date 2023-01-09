@@ -34,6 +34,7 @@
   on-key)
 
 (fn enable []
+  (if opts.debug (vim.notify "On-keypress mode enabled"))
   (each [_ key (ipairs ["f" "F" "t" "T"])]
     ;; Normal keypresses
     (vim.keymap.set ["n" "x"]

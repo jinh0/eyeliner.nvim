@@ -3,6 +3,7 @@
 
 (local {: get-locations} (require :eyeliner.liner))
 (local {: apply-eyeliner : clear-eyeliner} (require :eyeliner.shared))
+(local {: opts} (require :eyeliner.config))
 (local utils (require :eyeliner.utils))
 (local {: iter} utils)
 
@@ -24,6 +25,7 @@
 
 ;; Set Eyeliner to always-on mode
 (fn enable []
+  (if opts.debug (vim.notify "Always-on mode enabled"))
   ;; Hover autocmd
   (utils.set-autocmd ["CursorMoved" "WinScrolled" "BufReadPost"]
                      {:callback handle-hover :group "Eyeliner"})

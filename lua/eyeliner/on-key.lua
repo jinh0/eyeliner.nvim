@@ -49,6 +49,10 @@ local function handle_keypress(key, operator)
   return on_key
 end
 local function enable()
+  if opts.debug then
+    vim.notify("On-keypress mode enabled")
+  else
+  end
   for _, key in ipairs({"f", "F", "t", "T"}) do
     vim.keymap.set({"n", "x"}, key, handle_keypress(key, nil))
     for _0, operator in ipairs({"d", "y"}) do
