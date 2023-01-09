@@ -5,6 +5,9 @@ local utils = require("eyeliner.utils")
 local _local_1_ = require("eyeliner.config")
 local opts = _local_1_["opts"]
 local enabled = false
+local function enabled_3f()
+  return enabled
+end
 local function enable()
   if not enabled then
     utils["create-augroup"]("Eyeliner", {})
@@ -54,4 +57,4 @@ local function toggle()
     return disable()
   end
 end
-return {enable = enable, disable = disable, toggle = toggle}
+return {enable = enable, disable = disable, toggle = toggle, ["enabled?"] = enabled_3f}

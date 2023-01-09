@@ -9,6 +9,8 @@
 ;; We need to keep track of whether the plugin has been enabled already or not
 (var enabled false)
 
+(fn enabled? [] enabled)
+
 ;; TODO: use pcall
 (fn enable []
   (if (not enabled)
@@ -39,4 +41,5 @@
 
 {: enable
  : disable
- : toggle}
+ : toggle
+ : enabled?}
