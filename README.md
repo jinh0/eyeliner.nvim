@@ -23,6 +23,21 @@ Using [packer.nvim](https://github.com/wbthomason/packer.nvim):
 use 'jinh0/eyeliner.nvim'
 ```
 
+## ⚙️ Configuration
+
+Default values (in packer.nvim):
+```lua
+use {
+  'jinh0/eyeliner.nvim',
+  config = function()
+    require'eyeliner'.setup {
+      highlight_on_key = true, -- show highlights only after keypress
+      dim = false              -- dim all other characters if set to true (recommended!)
+    }
+  end
+}
+```
+
 ## ✨ Show highlights only after keypress
 If you prefer to have eyeliner's highlights shown only after you press `f`/`F`/`t`/`T`, set `highlight_on_key` to `true` in the setup function.
 
@@ -105,7 +120,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
 })
 ```
 
-## ⚙️ Commands
+## Commands
 Enable/disable/toggle:
 ```
 :EyelinerEnable
