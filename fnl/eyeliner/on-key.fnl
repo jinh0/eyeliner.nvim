@@ -24,7 +24,7 @@
           to-apply (get-locations line x dir)]
       ;; Apply eyeliner right after pressing key
       (if opts.dim (dim y x dir))
-      (iter (λ [token] (apply-eyeliner y token)) to-apply)
+      (apply-eyeliner y to-apply)
       ;; Draw fake cursor, since getcharstr() will move the real cursor away
       (utils.add-hl ns-id "Cursor" x)
       (vim.cmd ":redraw") ; :redraw to show Cursor highlight

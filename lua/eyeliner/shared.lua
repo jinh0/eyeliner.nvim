@@ -9,17 +9,20 @@ local function enable_highlights()
   utils["set-hl"]("EyelinerDimmed", dimmed.foreground)
   return utils["set-autocmd"]("ColorScheme", {callback = enable_highlights, group = "Eyeliner"})
 end
-local function apply_eyeliner(y, token)
-  local _let_1_ = token
-  local x = _let_1_["x"]
-  local freq = _let_1_["freq"]
-  local hl_group
-  if (freq == 1) then
-    hl_group = "EyelinerPrimary"
-  else
-    hl_group = "EyelinerSecondary"
+local function apply_eyeliner(y, tokens)
+  local function apply(token)
+    local _let_1_ = token
+    local x = _let_1_["x"]
+    local freq = _let_1_["freq"]
+    local hl_group
+    if (freq == 1) then
+      hl_group = "EyelinerPrimary"
+    else
+      hl_group = "EyelinerSecondary"
+    end
+    return vim.api.nvim_buf_add_highlight(0, ns_id, hl_group, (y - 1), (x - 1), x)
   end
-  return vim.api.nvim_buf_add_highlight(0, ns_id, hl_group, (y - 1), (x - 1), x)
+  return utils.iter(apply, tokens)
 end
 local function clear_eyeliner(y)
   if (y <= 0) then

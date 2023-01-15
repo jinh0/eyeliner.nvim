@@ -17,16 +17,8 @@ local function handle_hover()
   local left = get_locations(line, x, "left")
   local right = get_locations(line, x, "right")
   clear_eyeliner(prev_y)
-  local function _6_(token)
-    _G.assert((nil ~= token), "Missing argument token on fnl/eyeliner/always-on.fnl:22")
-    return apply_eyeliner(y, token)
-  end
-  iter(_6_, left)
-  local function _7_(token)
-    _G.assert((nil ~= token), "Missing argument token on fnl/eyeliner/always-on.fnl:23")
-    return apply_eyeliner(y, token)
-  end
-  iter(_7_, right)
+  apply_eyeliner(y, left)
+  apply_eyeliner(y, right)
   prev_y = y
   return nil
 end
@@ -36,9 +28,9 @@ local function enable()
   else
   end
   utils["set-autocmd"]({"CursorMoved", "WinScrolled", "BufReadPost"}, {callback = handle_hover, group = "Eyeliner"})
-  local function _9_()
+  local function _7_()
     return clear_eyeliner(prev_y)
   end
-  return utils["set-autocmd"]({"InsertEnter"}, {callback = _9_, group = "Eyeliner"})
+  return utils["set-autocmd"]({"InsertEnter"}, {callback = _7_, group = "Eyeliner"})
 end
 return {enable = enable}

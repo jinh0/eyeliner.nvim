@@ -36,11 +36,7 @@ local function handle_keypress(key, operator)
       dim(y, x, dir)
     else
     end
-    local function _9_(token)
-      _G.assert((nil ~= token), "Missing argument token on fnl/eyeliner/on-key.fnl:27")
-      return apply_eyeliner(y, token)
-    end
-    iter(_9_, to_apply)
+    apply_eyeliner(y, to_apply)
     utils["add-hl"](ns_id, "Cursor", x)
     vim.cmd(":redraw")
     pcall(simulate_find)

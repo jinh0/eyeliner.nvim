@@ -19,10 +19,12 @@
                        {:callback enable-highlights :group "Eyeliner"}))) 
 
 ;; Apply eyeliner (add highlight) for a given y and token
-(fn apply-eyeliner [y token]
-  (let [{: x : freq} token
-        hl-group (if (= freq 1) "EyelinerPrimary" "EyelinerSecondary")]
-    (vim.api.nvim_buf_add_highlight 0 ns-id hl-group (- y 1) (- x 1) x)))
+(fn apply-eyeliner [y tokens]
+  (fn apply [token]
+    (let [{: x : freq} token
+          hl-group (if (= freq 1) "EyelinerPrimary" "EyelinerSecondary")]
+      (vim.api.nvim_buf_add_highlight 0 ns-id hl-group (- y 1) (- x 1) x)))
+  (utils.iter apply tokens))
 
 ;; Clear eyeliner (remove highlights) for a given y
 (fn clear-eyeliner [y]

@@ -19,8 +19,8 @@
         left (get-locations line x :left)
         right (get-locations line x :right)]
     (clear-eyeliner prev-y)
-    (iter (λ [token] (apply-eyeliner y token)) left)
-    (iter (λ [token] (apply-eyeliner y token)) right)
+    (apply-eyeliner y left)
+    (apply-eyeliner y right)
     (set prev-y y)))
 
 ;; Set Eyeliner to always-on mode
