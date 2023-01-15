@@ -39,7 +39,7 @@
     ;; Normal keypresses
     (vim.keymap.set ["n" "x"]
                     key
-                    (handle-keypress key nil))
+                    (handle-keypress key))
     ;; Operator-pending keypresses
     (each [_ operator (ipairs ["d" "y"])]
       (vim.keymap.set ["n"]
@@ -54,4 +54,5 @@
 
 
 {: enable
- : remove-keybinds}
+ : remove-keybinds
+ :handle_keypress handle-keypress}

@@ -50,7 +50,7 @@ local function enable()
   else
   end
   for _, key in ipairs({"f", "F", "t", "T"}) do
-    vim.keymap.set({"n", "x"}, key, handle_keypress(key, nil))
+    vim.keymap.set({"n", "x"}, key, handle_keypress(key))
     for _0, operator in ipairs({"d", "y"}) do
       vim.keymap.set({"n"}, (operator .. key), handle_keypress(key, operator))
     end
@@ -66,4 +66,4 @@ local function remove_keybinds()
   end
   return nil
 end
-return {enable = enable, ["remove-keybinds"] = remove_keybinds}
+return {enable = enable, ["remove-keybinds"] = remove_keybinds, handle_keypress = handle_keypress}
