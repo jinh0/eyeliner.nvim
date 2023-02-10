@@ -18,9 +18,11 @@ local function handle_keypress(key, operator)
     else
     end
     vim.api.nvim_feedkeys(key, "n", true)
-    return vim.api.nvim_feedkeys(char, "n", true)
+    vim.api.nvim_feedkeys(char, "n", true)
+    return char
   end
   local function on_key()
+    vim.notify(vim.inspect(vim.v.count))
     local line = utils["get-current-line"]()
     local _let_6_ = utils["get-cursor"]()
     local y = _let_6_[1]
@@ -39,7 +41,15 @@ local function handle_keypress(key, operator)
     apply_eyeliner(y, to_apply)
     utils["add-hl"](ns_id, "Cursor", x)
     vim.cmd(":redraw")
-    pcall(simulate_find)
+    do
+      local ok_3f, char = pcall(simulate_find)
+      if ok_3f then
+        for i = 1, vim.v.count do
+          vim.api.nvim_feedkeys((key .. char), "n", true)
+        end
+      else
+      end
+    end
     return clear_eyeliner(y)
   end
   return on_key

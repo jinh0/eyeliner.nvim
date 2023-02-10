@@ -15,9 +15,12 @@
     (let [char (vim.fn.getcharstr)]
       (if operator (vim.api.nvim_feedkeys operator "n" true))
       (vim.api.nvim_feedkeys key "n" true)
-      (vim.api.nvim_feedkeys char "n" true)))
+      (vim.api.nvim_feedkeys char "n" true)
+      char))
 
+  ;; Main function that is run when "f", "F", "t", "T" is pressed
   (fn on-key []
+    (vim.notify (vim.inspect vim.v.count))
     (let [line (utils.get-current-line)
           [y x] (utils.get-cursor)
           dir (if (or (= key "f") (= key "t")) :right :left)
@@ -28,7 +31,12 @@
       ;; Draw fake cursor, since getcharstr() will move the real cursor away
       (utils.add-hl ns-id "Cursor" x)
       (vim.cmd ":redraw") ; :redraw to show Cursor highlight
-      (pcall simulate-find)
+      ;; Simulate normal "f" process
+      (let [(ok? char) (pcall simulate-find)]
+        (when ok?
+          ;; Repeat the action v:count # of times to allow actions like "2f"
+          (for [i 1 vim.v.count]
+            (vim.api.nvim_feedkeys (.. key char) "n" true))))
       (clear-eyeliner y)))
 
   on-key)
