@@ -22,7 +22,6 @@ local function handle_keypress(key, operator)
     return char
   end
   local function on_key()
-    vim.notify(vim.inspect(vim.v.count))
     local line = utils["get-current-line"]()
     local _let_6_ = utils["get-cursor"]()
     local y = _let_6_[1]

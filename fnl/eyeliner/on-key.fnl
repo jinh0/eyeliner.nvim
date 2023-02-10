@@ -20,7 +20,6 @@
 
   ;; Main function that is run when "f", "F", "t", "T" is pressed
   (fn on-key []
-    (vim.notify (vim.inspect vim.v.count))
     (let [line (utils.get-current-line)
           [y x] (utils.get-cursor)
           dir (if (or (= key "f") (= key "t")) :right :left)
