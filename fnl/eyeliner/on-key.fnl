@@ -14,8 +14,7 @@
   (fn simulate-find []
     (let [char (vim.fn.getcharstr)]
       (if operator (vim.api.nvim_feedkeys operator "n" true))
-      (vim.api.nvim_feedkeys key "n" true)
-      (vim.api.nvim_feedkeys char "n" true)
+      (vim.api.nvim_feedkeys (.. (tostring vim.v.count1) key char) "ni" true)
       char))
 
   ;; Main function that is run when "f", "F", "t", "T" is pressed
@@ -31,11 +30,7 @@
       (utils.add-hl ns-id "Cursor" x)
       (vim.cmd ":redraw") ; :redraw to show Cursor highlight
       ;; Simulate normal "f" process
-      (let [(ok? char) (pcall simulate-find)]
-        (when ok?
-          ;; Repeat the action v:count # of times to allow actions like "2f"
-          (for [i 1 vim.v.count]
-            (vim.api.nvim_feedkeys (.. key char) "n" true))))
+      (pcall simulate-find)
       (clear-eyeliner y)))
 
   on-key)
