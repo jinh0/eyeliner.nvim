@@ -13,8 +13,9 @@
   ;; getcharstr() as a preliminary step. This is the purpose of simulate-find.
   (fn simulate-find []
     (let [char (vim.fn.getcharstr)]
-      (if operator (vim.api.nvim_feedkeys operator "n" true))
-      (vim.api.nvim_feedkeys (.. (tostring vim.v.count1) key char) "ni" true)
+      (if operator
+          (vim.api.nvim_feedkeys (.. operator (tostring vim.v.count1) key char) "n" true)
+          (vim.api.nvim_feedkeys (.. (tostring vim.v.count1) key char) "ni" true))
       char))
 
   ;; Main function that is run when "f", "F", "t", "T" is pressed

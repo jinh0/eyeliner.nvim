@@ -14,10 +14,10 @@ local function handle_keypress(key, operator)
   local function simulate_find()
     local char = vim.fn.getcharstr()
     if operator then
-      vim.api.nvim_feedkeys(operator, "n", true)
+      vim.api.nvim_feedkeys((operator .. tostring(vim.v.count1) .. key .. char), "n", true)
     else
+      vim.api.nvim_feedkeys((tostring(vim.v.count1) .. key .. char), "ni", true)
     end
-    vim.api.nvim_feedkeys((tostring(vim.v.count1) .. key .. char), "ni", true)
     return char
   end
   local function on_key()
