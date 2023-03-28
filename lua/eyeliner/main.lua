@@ -52,9 +52,9 @@ local function disable()
 end
 local function toggle()
   if enabled then
-    return enable()
-  else
     return disable()
+  else
+    return enable()
   end
 end
 return {enable = enable, disable = disable, toggle = toggle, ["enabled?"] = enabled_3f}

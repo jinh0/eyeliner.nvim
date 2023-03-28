@@ -36,7 +36,7 @@
       false))
 
 (fn toggle []
-  (if enabled (enable) (disable)))
+  (if enabled (disable) (enable)))
 
 
 {: enable
