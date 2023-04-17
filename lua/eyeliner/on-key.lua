@@ -10,21 +10,12 @@ local dim = _local_3_["dim"]
 local utils = require("eyeliner.utils")
 local _local_4_ = utils
 local iter = _local_4_["iter"]
-local function handle_keypress(key, operator)
-  local function simulate_find()
-    local char = vim.fn.getcharstr()
-    if operator then
-      vim.api.nvim_feedkeys((operator .. tostring(vim.v.count1) .. key .. char), "n", true)
-    else
-      vim.api.nvim_feedkeys((tostring(vim.v.count1) .. key .. char), "ni", true)
-    end
-    return char
-  end
+local function handle_keypress(key)
   local function on_key()
     local line = utils["get-current-line"]()
-    local _let_6_ = utils["get-cursor"]()
-    local y = _let_6_[1]
-    local x = _let_6_[2]
+    local _let_5_ = utils["get-cursor"]()
+    local y = _let_5_[1]
+    local x = _let_5_[2]
     local dir
     if ((key == "f") or (key == "t")) then
       dir = "right"
@@ -39,8 +30,9 @@ local function handle_keypress(key, operator)
     apply_eyeliner(y, to_apply)
     utils["add-hl"](ns_id, "Cursor", x)
     vim.cmd(":redraw")
-    pcall(simulate_find)
-    return clear_eyeliner(y)
+    local char = vim.fn.getcharstr()
+    clear_eyeliner(y)
+    return (key .. char)
   end
   return on_key
 end
@@ -50,19 +42,13 @@ local function enable()
   else
   end
   for _, key in ipairs({"f", "F", "t", "T"}) do
-    vim.keymap.set({"n", "x"}, key, handle_keypress(key))
-    for _0, operator in ipairs({"d", "y"}) do
-      vim.keymap.set({"n"}, (operator .. key), handle_keypress(key, operator))
-    end
+    vim.keymap.set({"n", "x", "o"}, key, handle_keypress(key), {expr = true})
   end
   return nil
 end
 local function remove_keybinds()
   for _, key in ipairs({"f", "F", "t", "T"}) do
-    vim.keymap.del({"n", "x"}, key)
-    for _0, operator in ipairs({"d", "y"}) do
-      vim.keymap.del({"n"}, (operator .. key))
-    end
+    vim.keymap.del({"n", "x", "o"}, key)
   end
   return nil
 end
