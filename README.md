@@ -65,7 +65,7 @@ https://user-images.githubusercontent.com/40512164/180614964-c1a63671-7fa8-438d-
 When using `highlight_on_key`, you may want to dim the rest of the characters since they are unimportant. You can do this with the `dim` option:
 
 ```lua
-require'eyeliner'.steup {
+require'eyeliner'.setup {
   highlight_on_key = true, -- this must be set to true for dimming to work!
   dim = true,
 }
