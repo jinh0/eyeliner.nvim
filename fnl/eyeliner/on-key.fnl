@@ -34,7 +34,7 @@
     (vim.keymap.set ["n" "x" "o"]
                     key
                     (handle-keypress key)
-                    { :expr true })))
+                    {:expr true})))
 
 (fn remove-keybinds []
   (each [_ key (ipairs ["f" "F" "t" "T"])]

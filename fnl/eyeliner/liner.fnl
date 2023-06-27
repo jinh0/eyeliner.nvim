@@ -3,6 +3,7 @@
 
 (local {: str->list : alphanumeric? : alphabetic?} (require "eyeliner.string"))
 (local {: map : filter : some?} (require "eyeliner.utils"))
+(local {: opts} (require "eyeliner.config"))
 
 ;; type Token = { x: number, freq: number, char: string }
 
@@ -78,7 +79,7 @@
 (fn get-locations [line x dir] ; dir = direction (:left | :right)
   ;; Get token with minimum frequency in a word
   (fn min-token [word]
-    (let [valid-tokens (filter (λ [token] (alphabetic? token.char)) word)]
+    (let [valid-tokens (filter (λ [token] (token.char:match opts.match)) word)]
       (accumulate [min {:freq 9999999} _ token (ipairs valid-tokens)]
         (if (< token.freq min.freq) token min))))
 

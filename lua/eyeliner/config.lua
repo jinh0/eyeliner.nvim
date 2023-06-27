@@ -1,4 +1,4 @@
-local opts = {dim = false, debug = false, highlight_on_key = false}
+local opts = {match = "[A-Za-z]", dim = false, debug = false, highlight_on_key = false}
 local function setup(user)
   local _let_1_ = require("eyeliner.main")
   local enabled_3f = _let_1_["enabled?"]
@@ -12,6 +12,7 @@ local function setup(user)
   opts.highlight_on_key = merged.highlight_on_key
   opts.dim = merged.dim
   opts.debug = merged.debug
+  opts.match = merged.match
   if opts.debug then
     vim.notify("Eyeliner debug mode enabled")
   else

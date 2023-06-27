@@ -1,7 +1,7 @@
 ;; [config.fnl]
 ;; Configuration options & setup
 
-(var opts {:highlight_on_key false :dim false :debug false})
+(var opts {:highlight_on_key false :dim false :debug false :match "[A-Za-z]"})
 
 (fn setup [user]
   (let [{: enabled? : enable : disable} (require :eyeliner.main)
@@ -11,6 +11,7 @@
     (set opts.highlight_on_key merged.highlight_on_key)
     (set opts.dim merged.dim)
     (set opts.debug merged.debug)
+    (set opts.match merged.match)
     (if opts.debug (vim.notify "Eyeliner debug mode enabled"))
     (enable)))
 
