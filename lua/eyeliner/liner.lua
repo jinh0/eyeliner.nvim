@@ -53,40 +53,43 @@ local function get_tokens(line, x, dir)
     _end = 1
   end
   for idx = start, _end, step do
-    local char = (line0)[idx]
-    local freq = freqs[char]
-    if (freq == nil) then
-      freqs[char] = 1
+    if not ((line0)[idx] == nil) then
+      local char = (line0)[idx]
+      local freq = freqs[char]
+      if (freq == nil) then
+        freqs[char] = 1
+      else
+        freqs[char] = (1 + freq)
+      end
+      table.insert(tokens, {x = idx, freq = freqs[char], char = char})
     else
-      freqs[char] = (1 + freq)
     end
-    table.insert(tokens, {x = idx, freq = freqs[char], char = char})
   end
-  local function _8_(token)
-    _G.assert((nil ~= token), "Missing argument token on fnl/eyeliner/liner.fnl:52")
+  local function _9_(token)
+    _G.assert((nil ~= token), "Missing argument token on fnl/eyeliner/liner.fnl:53")
     if go_right_3f then
       return (token.x >= first_proper)
     else
       return (token.x <= first_proper)
     end
   end
-  local function _10_()
+  local function _11_()
     if go_right_3f then
       return tokens
     else
       return reversed(tokens)
     end
   end
-  return filter(_8_, _10_())
+  return filter(_9_, _11_())
 end
 local function tokens__3ewords(tokens)
   local words = {}
   local not_empty_3f
-  local function _11_(word)
-    _G.assert((nil ~= word), "Missing argument word on fnl/eyeliner/liner.fnl:65")
+  local function _12_(word)
+    _G.assert((nil ~= word), "Missing argument word on fnl/eyeliner/liner.fnl:66")
     return (#word ~= 0)
   end
-  not_empty_3f = _11_
+  not_empty_3f = _12_
   local word = {}
   for idx, token in ipairs(tokens) do
     if not alphanumeric_3f(token.char) then
@@ -102,11 +105,11 @@ end
 local function get_locations(line, x, dir)
   local function min_token(word)
     local valid_tokens
-    local function _13_(token)
-      _G.assert((nil ~= token), "Missing argument token on fnl/eyeliner/liner.fnl:80")
+    local function _14_(token)
+      _G.assert((nil ~= token), "Missing argument token on fnl/eyeliner/liner.fnl:81")
       return alphabetic_3f(token.char)
     end
-    valid_tokens = filter(_13_, word)
+    valid_tokens = filter(_14_, word)
     local min = {freq = 9999999}
     for _, token in ipairs(valid_tokens) do
       if (token.freq < min.freq) then
@@ -121,11 +124,11 @@ local function get_locations(line, x, dir)
   local words = tokens__3ewords(tokens)
   local min_tokens = map(min_token, words)
   local valid_3f
-  local function _15_(token)
-    _G.assert((nil ~= token), "Missing argument token on fnl/eyeliner/liner.fnl:89")
+  local function _16_(token)
+    _G.assert((nil ~= token), "Missing argument token on fnl/eyeliner/liner.fnl:90")
     return (token.freq <= 2)
   end
-  valid_3f = _15_
+  valid_3f = _16_
   return filter(valid_3f, min_tokens)
 end
 return {["get-locations"] = get_locations}

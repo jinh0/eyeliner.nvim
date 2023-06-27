@@ -41,12 +41,13 @@
         start (if go-right? (+ x 2) x)
         end (if go-right? (# line) 1)]
     (for [idx start end step]
-      (let [char (. line idx)
-            freq (. freqs char)]
-        (if (= freq nil)
-            (tset freqs char 1)
-            (tset freqs char (+ 1 freq)))
-        (table.insert tokens {:x idx :freq (. freqs char) : char})))
+      (if (not (= (. line idx) nil))
+          (let [char (. line idx)
+                freq (. freqs char)]
+            (if (= freq nil)
+                (tset freqs char 1)
+                (tset freqs char (+ 1 freq)))
+            (table.insert tokens {:x idx :freq (. freqs char) : char}))))
     ;; We need to remove all the characters of the word the cursor is on.
     ;; Reverse the list if going left to prioritize earlier (more to the left) letters
     (filter (λ [token]
