@@ -10,7 +10,7 @@ local function enabled_3f()
 end
 local function enable()
   if not enabled then
-    utils["create-augroup"]("Eyeliner", {})
+    utils["create-augroup"]("Eyeliner", {clear = true})
     shared["enable-highlights"]()
     if opts.highlight_on_key then
       on_key.enable()

@@ -14,7 +14,7 @@
 ;; TODO: use pcall
 (fn enable []
   (if (not enabled)
-      (do (utils.create-augroup "Eyeliner" {})
+      (do (utils.create-augroup "Eyeliner" {:clear true})
           (shared.enable-highlights)
           (if opts.highlight_on_key
               (on-key.enable)
