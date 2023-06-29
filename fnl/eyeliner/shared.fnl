@@ -9,10 +9,14 @@
 
 ;; Enable Eyeliner's syntax highlighting, and setup ColorScheme autocmd
 (fn enable-highlights []
-  (vim.api.nvim_set_hl 0 :EyelinerPrimary {:link :Constant})
-  (vim.api.nvim_set_hl 0 :EyelinerSecondary {:link :Define})
-  (vim.api.nvim_set_hl 0 :EyelinerDimmed {:link :Comment})
-  (utils.set-autocmd :ColorScheme {:callback enable-highlights :group :Eyeliner}))
+  (let [primary (utils.get-hl "Constant")
+        secondary (utils.get-hl "Define")
+        dimmed (utils.get-hl "Comment")]
+    (utils.set-hl "EyelinerPrimary" primary.foreground)
+    (utils.set-hl "EyelinerSecondary" secondary.foreground)
+    (utils.set-hl "EyelinerDimmed" dimmed.foreground)
+    (utils.set-autocmd "ColorScheme"
+                       {:callback enable-highlights :group "Eyeliner"}))) 
 
 ;; Apply eyeliner (add highlight) for a given y and token
 (fn apply-eyeliner [y tokens]
