@@ -10,31 +10,28 @@ local dim = _local_3_["dim"]
 local utils = require("eyeliner.utils")
 local _local_4_ = utils
 local iter = _local_4_["iter"]
-local function handle_keypress(key)
-  local function on_key()
-    local line = utils["get-current-line"]()
-    local _let_5_ = utils["get-cursor"]()
-    local y = _let_5_[1]
-    local x = _let_5_[2]
-    local dir
-    if ((key == "f") or (key == "t")) then
-      dir = "right"
-    else
-      dir = "left"
-    end
-    local to_apply = get_locations(line, x, dir)
-    if opts.dim then
-      dim(y, x, dir)
-    else
-    end
-    apply_eyeliner(y, to_apply)
-    utils["add-hl"](ns_id, "Cursor", x)
-    vim.cmd(":redraw")
-    local char = vim.fn.getcharstr()
-    clear_eyeliner(y)
-    return (key .. char)
+local function on_key(key)
+  local line = utils["get-current-line"]()
+  local _let_5_ = utils["get-cursor"]()
+  local y = _let_5_[1]
+  local x = _let_5_[2]
+  local dir
+  if ((key == "f") or (key == "t")) then
+    dir = "right"
+  else
+    dir = "left"
   end
-  return on_key
+  local to_apply = get_locations(line, x, dir)
+  if opts.dim then
+    dim(y, x, dir)
+  else
+  end
+  apply_eyeliner(y, to_apply)
+  utils["add-hl"](ns_id, "Cursor", x)
+  vim.cmd(":redraw")
+  local char = vim.fn.getcharstr()
+  clear_eyeliner(y)
+  return (key .. char)
 end
 local function enable()
   if opts.debug then
@@ -42,7 +39,10 @@ local function enable()
   else
   end
   for _, key in ipairs({"f", "F", "t", "T"}) do
-    vim.keymap.set({"n", "x", "o"}, key, handle_keypress(key), {expr = true})
+    local function _9_()
+      return on_key(key)
+    end
+    vim.keymap.set({"n", "x", "o"}, key, _9_, {expr = true})
   end
   return nil
 end
@@ -52,4 +52,4 @@ local function remove_keybinds()
   end
   return nil
 end
-return {enable = enable, ["remove-keybinds"] = remove_keybinds, handle_keypress = handle_keypress}
+return {enable = enable, ["remove-keybinds"] = remove_keybinds}
