@@ -1,20 +1,24 @@
 local utils = require("eyeliner.utils")
 local ns_id = vim.api.nvim_create_namespace("eyeliner")
 local function enable_highlights()
-  local primary = utils["get-hl"]("Constant")
-  local secondary = utils["get-hl"]("Define")
-  local dimmed = utils["get-hl"]("Comment")
-  utils["set-hl"]("EyelinerPrimary", primary.foreground)
-  utils["set-hl"]("EyelinerSecondary", secondary.foreground)
-  utils["set-hl"]("EyelinerDimmed", dimmed.foreground)
-  utils["create-augroup"]("Eyeliner", {clear = true})
-  return utils["set-autocmd"]("ColorScheme", {callback = enable_highlights, group = "Eyeliner"})
+  local callback
+  local function _1_()
+    local primary = utils["get-hl"]("Constant")
+    local secondary = utils["get-hl"]("Define")
+    local dimmed = utils["get-hl"]("Comment")
+    utils["set-hl"]("EyelinerPrimary", primary.foreground)
+    utils["set-hl"]("EyelinerSecondary", secondary.foreground)
+    return utils["set-hl"]("EyelinerDimmed", dimmed.foreground)
+  end
+  callback = _1_
+  callback()
+  return utils["set-autocmd"]("ColorScheme", {callback = callback, group = "Eyeliner"})
 end
 local function apply_eyeliner(y, tokens)
   local function apply(token)
-    local _let_1_ = token
-    local x = _let_1_["x"]
-    local freq = _let_1_["freq"]
+    local _let_2_ = token
+    local x = _let_2_["x"]
+    local freq = _let_2_["freq"]
     local hl_group
     if (freq == 1) then
       hl_group = "EyelinerPrimary"
