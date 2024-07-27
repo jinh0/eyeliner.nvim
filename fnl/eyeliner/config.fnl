@@ -8,10 +8,8 @@
         ;; merged = union of default options and user's options
         merged (vim.tbl_deep_extend "force" {} opts (or user {}))]
     (if (enabled?) (disable)) ; See https://github.com/jinh0/eyeliner.nvim/pull/19
-    (set opts.highlight_on_key merged.highlight_on_key)
-    (set opts.dim merged.dim)
-    (set opts.debug merged.debug)
-    (set opts.match merged.match)
+    (each [key value (pairs merged)]
+      (tset opts key value))
     (if opts.debug (vim.notify "Eyeliner debug mode enabled"))
     (enable)))
 
