@@ -29,9 +29,8 @@ local function on_key(key)
   apply_eyeliner(y, to_apply)
   utils["add-hl"](ns_id, "Cursor", x)
   vim.cmd(":redraw")
-  local char = vim.fn.getcharstr()
   clear_eyeliner(y)
-  return (key .. char)
+  return key
 end
 local function enable()
   if opts.debug then

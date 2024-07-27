@@ -19,9 +19,8 @@
     (utils.add-hl ns-id "Cursor" x)
     (vim.cmd ":redraw") ; :redraw to show Cursor highlight
     ;; Simulate normal "f" process
-    (let [char (vim.fn.getcharstr)]
-      (clear-eyeliner y)
-      (.. key char))))
+    (clear-eyeliner y)
+    key))
 
 (fn enable []
   (if opts.debug (vim.notify "On-keypress mode enabled"))
