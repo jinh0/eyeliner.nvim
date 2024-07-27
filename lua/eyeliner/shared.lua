@@ -1,3 +1,5 @@
+local _local_1_ = require("eyeliner.config")
+local opts = _local_1_["opts"]
 local utils = require("eyeliner.utils")
 local ns_id = vim.api.nvim_create_namespace("eyeliner")
 local function enable_highlights()
@@ -12,9 +14,9 @@ local function enable_highlights()
 end
 local function apply_eyeliner(y, tokens)
   local function apply(token)
-    local _let_1_ = token
-    local x = _let_1_["x"]
-    local freq = _let_1_["freq"]
+    local _let_2_ = token
+    local x = _let_2_["x"]
+    local freq = _let_2_["freq"]
     local hl_group
     if (freq == 1) then
       hl_group = "EyelinerPrimary"
@@ -38,11 +40,11 @@ local function dim(y, x, dir)
   if (dir == "right") then
     start = (x + 1)
   else
-    start = 0
+    start = math.max(0, (x - opts.max_length))
   end
   local _end
   if (dir == "right") then
-    _end = #line
+    _end = math.min(#line, (start + opts.max_length))
   else
     _end = x
   end

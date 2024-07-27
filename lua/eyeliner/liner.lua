@@ -50,9 +50,9 @@ local function get_tokens(line, x, dir)
   end
   local _end
   if go_right_3f then
-    _end = #line0
+    _end = math.min(#line0, (start + opts.max_length))
   else
-    _end = 1
+    _end = math.max(1, (start - opts.max_length))
   end
   for idx = start, _end, step do
     if not ((line0)[idx] == nil) then
@@ -68,7 +68,7 @@ local function get_tokens(line, x, dir)
     end
   end
   local function _10_(token)
-    _G.assert((nil ~= token), "Missing argument token on fnl/eyeliner/liner.fnl:54")
+    _G.assert((nil ~= token), "Missing argument token on fnl/eyeliner/liner.fnl:56")
     if go_right_3f then
       return (token.x >= first_proper)
     else
@@ -88,7 +88,7 @@ local function tokens__3ewords(tokens)
   local words = {}
   local not_empty_3f
   local function _13_(word)
-    _G.assert((nil ~= word), "Missing argument word on fnl/eyeliner/liner.fnl:67")
+    _G.assert((nil ~= word), "Missing argument word on fnl/eyeliner/liner.fnl:69")
     return (#word ~= 0)
   end
   not_empty_3f = _13_
@@ -108,7 +108,7 @@ local function get_locations(line, x, dir)
   local function min_token(word)
     local valid_tokens
     local function _15_(token)
-      _G.assert((nil ~= token), "Missing argument token on fnl/eyeliner/liner.fnl:82")
+      _G.assert((nil ~= token), "Missing argument token on fnl/eyeliner/liner.fnl:84")
       return (token.char):match(opts.match)
     end
     valid_tokens = filter(_15_, word)
@@ -127,7 +127,7 @@ local function get_locations(line, x, dir)
   local min_tokens = map(min_token, words)
   local valid_3f
   local function _17_(token)
-    _G.assert((nil ~= token), "Missing argument token on fnl/eyeliner/liner.fnl:91")
+    _G.assert((nil ~= token), "Missing argument token on fnl/eyeliner/liner.fnl:93")
     return (token.freq <= 2)
   end
   valid_3f = _17_

@@ -1,7 +1,12 @@
 ;; [config.fnl]
 ;; Configuration options & setup
 
-(var opts {:highlight_on_key false :dim false :debug false :match "[A-Za-z]"})
+(var opts
+   {:highlight_on_key false
+    :dim false
+    :max_length 9999
+    :debug false
+    :match "[A-Za-z]"})
 
 (fn setup [user]
   (let [{: enabled? : enable : disable} (require :eyeliner.main)

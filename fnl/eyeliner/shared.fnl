@@ -1,6 +1,7 @@
 ;; [shared.fnl]
 ;; Eyeliner functions shared by the two modes, always-on and on-keypress
 
+(local {: opts} (require :eyeliner.config))
 (local utils (require :eyeliner.utils))
 
 ;; For syntax highlighting, we create a namespace to group all
@@ -35,8 +36,12 @@
 
 (fn dim [y x dir]
   (let [line (utils.get-current-line)
-        start (if (= dir :right) (+ x 1) 0)
-        end (if (= dir :right) (# line) x)]
+        start (if (= dir :right)
+                  (+ x 1)
+                  (math.max 0 (- x opts.max_length)))
+        end (if (= dir :right)
+                (math.min (# line) (+ start opts.max_length))
+                x)]
     (vim.api.nvim_buf_add_highlight 0 ns-id "EyelinerDimmed" (- y 1) start end)))
 
 

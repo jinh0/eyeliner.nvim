@@ -40,7 +40,9 @@
         line (str->list line)
         first-proper (get-first-proper)
         start (if go-right? (+ x 2) x)
-        end (if go-right? (# line) 1)]
+        end (if go-right?
+                (math.min (# line) (+ start opts.max_length))
+                (math.max 1 (- start opts.max_length)))]
     (for [idx start end step]
       (if (not (= (. line idx) nil))
           (let [char (. line idx)

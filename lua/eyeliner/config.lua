@@ -1,4 +1,4 @@
-local opts = {match = "[A-Za-z]", dim = false, highlight_on_key = false, debug = false}
+local opts = {max_length = 9999, match = "[A-Za-z]", debug = false, highlight_on_key = false, dim = false}
 local function setup(user)
   local _let_1_ = require("eyeliner.main")
   local enabled_3f = _let_1_["enabled?"]
