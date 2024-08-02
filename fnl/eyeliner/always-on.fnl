@@ -5,7 +5,6 @@
 (local {: apply-eyeliner : clear-eyeliner} (require :eyeliner.shared))
 (local {: opts} (require :eyeliner.config))
 (local utils (require :eyeliner.utils))
-(local {: iter} utils)
 
 ;; We need to keep track of the previous y-coordinate of the user,
 ;; so that we can clear the eyeliner applied on the previous line.

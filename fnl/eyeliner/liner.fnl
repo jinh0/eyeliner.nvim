@@ -1,8 +1,8 @@
 ;; [liner.fnl]
 ;; Main algorithm for calculating which characters to highlight
 
-(local {: str->list : alphanumeric? : alphabetic?} (require "eyeliner.string"))
-(local {: map : filter : some?} (require "eyeliner.utils"))
+(local {: str->list : alphanumeric?} (require "eyeliner.string"))
+(local {: map : filter} (require "eyeliner.utils"))
 (local {: opts} (require "eyeliner.config"))
 
 ;; type Token = { x: number, freq: number, char: string }

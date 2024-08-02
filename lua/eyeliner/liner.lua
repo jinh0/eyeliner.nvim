@@ -1,11 +1,9 @@
 local _local_1_ = require("eyeliner.string")
 local str__3elist = _local_1_["str->list"]
 local alphanumeric_3f = _local_1_["alphanumeric?"]
-local alphabetic_3f = _local_1_["alphabetic?"]
 local _local_2_ = require("eyeliner.utils")
 local map = _local_2_["map"]
 local filter = _local_2_["filter"]
-local some_3f = _local_2_["some?"]
 local _local_3_ = require("eyeliner.config")
 local opts = _local_3_["opts"]
 local function get_tokens(line, x, dir)
@@ -55,8 +53,8 @@ local function get_tokens(line, x, dir)
     _end = math.max(1, (start - opts.max_length))
   end
   for idx = start, _end, step do
-    if not ((line0)[idx] == nil) then
-      local char = (line0)[idx]
+    if not (line0[idx] == nil) then
+      local char = line0[idx]
       local freq = freqs[char]
       if (freq == nil) then
         freqs[char] = 1

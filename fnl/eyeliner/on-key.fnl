@@ -5,7 +5,6 @@
 (local {: opts} (require :eyeliner.config))
 (local {: ns-id : clear-eyeliner : apply-eyeliner : dim} (require :eyeliner.shared))
 (local utils (require :eyeliner.utils))
-(local {: iter} utils)
 
 (fn on-key [key]
   (let [line (utils.get-current-line)

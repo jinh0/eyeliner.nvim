@@ -1,7 +1,7 @@
 ;; [config.fnl]
 ;; Configuration options & setup
 
-(var opts
+(local opts
    {:highlight_on_key false
     :dim false
     :max_length 9999

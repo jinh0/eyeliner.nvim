@@ -8,13 +8,11 @@ local clear_eyeliner = _local_3_["clear-eyeliner"]
 local apply_eyeliner = _local_3_["apply-eyeliner"]
 local dim = _local_3_["dim"]
 local utils = require("eyeliner.utils")
-local _local_4_ = utils
-local iter = _local_4_["iter"]
 local function on_key(key)
   local line = utils["get-current-line"]()
-  local _let_5_ = utils["get-cursor"]()
-  local y = _let_5_[1]
-  local x = _let_5_[2]
+  local _let_4_ = utils["get-cursor"]()
+  local y = _let_4_[1]
+  local x = _let_4_[2]
   local dir
   if ((key == "f") or (key == "t")) then
     dir = "right"
@@ -38,10 +36,10 @@ local function enable()
   else
   end
   for _, key in ipairs({"f", "F", "t", "T"}) do
-    local function _9_()
+    local function _8_()
       return on_key(key)
     end
-    vim.keymap.set({"n", "x", "o"}, key, _9_, {expr = true})
+    vim.keymap.set({"n", "x", "o"}, key, _8_, {expr = true})
   end
   return nil
 end
