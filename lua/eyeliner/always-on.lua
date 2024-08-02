@@ -8,17 +8,22 @@ local opts = _local_3_["opts"]
 local utils = require("eyeliner.utils")
 local prev_y = 0
 local function handle_hover()
-  local line = utils["get-current-line"]()
-  local _let_4_ = utils["get-cursor"]()
-  local y = _let_4_[1]
-  local x = _let_4_[2]
-  local left = get_locations(line, x, "left")
-  local right = get_locations(line, x, "right")
-  clear_eyeliner(prev_y)
-  apply_eyeliner(y, left)
-  apply_eyeliner(y, right)
-  prev_y = y
-  return nil
+  local cur_bufnr = vim.api.nvim_get_current_buf()
+  if not utils["exists?"](opts.disabled_filetypes, vim.bo[cur_bufnr].filetype) then
+    local line = utils["get-current-line"]()
+    local _let_4_ = utils["get-cursor"]()
+    local y = _let_4_[1]
+    local x = _let_4_[2]
+    local left = get_locations(line, x, "left")
+    local right = get_locations(line, x, "right")
+    clear_eyeliner(prev_y)
+    apply_eyeliner(y, left)
+    apply_eyeliner(y, right)
+    prev_y = y
+    return nil
+  else
+    return nil
+  end
 end
 local function enable()
   if opts.debug then
@@ -26,9 +31,9 @@ local function enable()
   else
   end
   utils["set-autocmd"]({"CursorMoved", "WinScrolled", "BufReadPost"}, {callback = handle_hover, group = "Eyeliner"})
-  local function _6_()
+  local function _7_()
     return clear_eyeliner(prev_y)
   end
-  return utils["set-autocmd"]({"InsertEnter"}, {callback = _6_, group = "Eyeliner"})
+  return utils["set-autocmd"]({"InsertEnter"}, {callback = _7_, group = "Eyeliner"})
 end
 return {enable = enable}

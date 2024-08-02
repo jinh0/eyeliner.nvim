@@ -1,4 +1,4 @@
-local opts = {max_length = 9999, match = "[A-Za-z]", debug = false, dim = false, highlight_on_key = false}
+local opts = {max_length = 9999, disabled_filetypes = {}, match = "[A-Za-z]", debug = false, dim = false, highlight_on_key = false}
 local function setup(user)
   local _let_1_ = require("eyeliner.main")
   local enabled_3f = _let_1_["enabled?"]

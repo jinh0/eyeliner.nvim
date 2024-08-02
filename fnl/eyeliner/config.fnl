@@ -6,6 +6,7 @@
     :dim false
     :max_length 9999
     :debug false
+    :disabled_filetypes []
     :match "[A-Za-z]"})
 
 (fn setup [user]

@@ -13,14 +13,16 @@
 ;; This function runs every time the cursor moves (TODO: better name?).
 ;; It clears the previous highlights and adds new highlights on the current line.
 (fn handle-hover []
-  (let [line (utils.get-current-line)
-        [y x] (utils.get-cursor)
-        left (get-locations line x :left)
-        right (get-locations line x :right)]
-    (clear-eyeliner prev-y)
-    (apply-eyeliner y left)
-    (apply-eyeliner y right)
-    (set prev-y y)))
+  (local cur_bufnr (vim.api.nvim_get_current_buf))
+  (when (not (utils.exists? opts.disabled_filetypes (. (. vim.bo cur_bufnr) :filetype)))
+    (let [line (utils.get-current-line)
+          [y x] (utils.get-cursor)
+          left (get-locations line x :left)
+          right (get-locations line x :right)]
+      (clear-eyeliner prev-y)
+      (apply-eyeliner y left)
+      (apply-eyeliner y right)
+      (set prev-y y))))
 
 ;; Set Eyeliner to always-on mode
 (fn enable []

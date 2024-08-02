@@ -42,6 +42,9 @@
         (set status true)))
   status)
 
+(fn exists? [list x]
+  (some? (λ [y] (= y x)) list))
+
 {: set-autocmd
  : del-augroup
  : create-augroup
@@ -53,4 +56,5 @@
  : map
  : filter
  : iter
- : some?}
+ : some?
+ : exists?}

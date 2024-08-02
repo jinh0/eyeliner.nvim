@@ -18,35 +18,35 @@ local function add_hl(ns_id, hl_group, x)
   return vim.api.nvim_buf_add_highlight(0, ns_id, hl_group, (y - 1), x, (x + 1))
 end
 local function map(f, list)
-  local tbl_15_auto = {}
-  local i_16_auto = #tbl_15_auto
+  local tbl_19_auto = {}
+  local i_20_auto = 0
   for _, val in ipairs(list) do
-    local val_17_auto = f(val)
-    if (nil ~= val_17_auto) then
-      i_16_auto = (i_16_auto + 1)
-      do end (tbl_15_auto)[i_16_auto] = val_17_auto
+    local val_21_auto = f(val)
+    if (nil ~= val_21_auto) then
+      i_20_auto = (i_20_auto + 1)
+      do end (tbl_19_auto)[i_20_auto] = val_21_auto
     else
     end
   end
-  return tbl_15_auto
+  return tbl_19_auto
 end
 local function filter(f, list)
-  local tbl_15_auto = {}
-  local i_16_auto = #tbl_15_auto
+  local tbl_19_auto = {}
+  local i_20_auto = 0
   for _, val in ipairs(list) do
-    local val_17_auto
+    local val_21_auto
     if f(val) then
-      val_17_auto = val
+      val_21_auto = val
     else
-      val_17_auto = nil
+      val_21_auto = nil
     end
-    if (nil ~= val_17_auto) then
-      i_16_auto = (i_16_auto + 1)
-      do end (tbl_15_auto)[i_16_auto] = val_17_auto
+    if (nil ~= val_21_auto) then
+      i_20_auto = (i_20_auto + 1)
+      do end (tbl_19_auto)[i_20_auto] = val_21_auto
     else
     end
   end
-  return tbl_15_auto
+  return tbl_19_auto
 end
 local function iter(f, list)
   for _, val in ipairs(list) do
@@ -64,4 +64,11 @@ local function some_3f(f, list)
   end
   return status
 end
-return {["set-autocmd"] = set_autocmd, ["del-augroup"] = del_augroup, ["create-augroup"] = create_augroup, ["get-current-line"] = get_current_line, ["get-cursor"] = get_cursor, ["get-hl"] = get_hl, ["set-hl"] = set_hl, ["add-hl"] = add_hl, map = map, filter = filter, iter = iter, ["some?"] = some_3f}
+local function exists_3f(list, x)
+  local function _6_(y)
+    _G.assert((nil ~= y), "Missing argument y on fnl/eyeliner/utils.fnl:46")
+    return (y == x)
+  end
+  return some_3f(_6_, list)
+end
+return {["set-autocmd"] = set_autocmd, ["del-augroup"] = del_augroup, ["create-augroup"] = create_augroup, ["get-current-line"] = get_current_line, ["get-cursor"] = get_cursor, ["get-hl"] = get_hl, ["set-hl"] = set_hl, ["add-hl"] = add_hl, map = map, filter = filter, iter = iter, ["some?"] = some_3f, ["exists?"] = exists_3f}
