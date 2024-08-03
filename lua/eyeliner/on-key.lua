@@ -62,10 +62,10 @@ local function enable()
   end
   disable_filetypes()
   disable_buftypes()
-  utils["set-autocmd"]({"BufEnter"}, {callback = enable_keybinds, group = "Eyeliner"})
+  utils["set-autocmd"]({"BufEnter"}, {callback = enable_keybinds})
   local function _11_()
     return pcall(remove_keybinds)
   end
-  return utils["set-autocmd"]({"BufLeave"}, {callback = _11_, group = "Eyeliner"})
+  return utils["set-autocmd"]({"BufLeave"}, {callback = _11_})
 end
 return {enable = enable, ["remove-keybinds"] = remove_keybinds}

@@ -17,8 +17,7 @@
     (utils.set-hl "EyelinerSecondary" secondary.foreground)
     (utils.set-hl "EyelinerDimmed" dimmed.foreground)
     (utils.create-augroup "Eyeliner" {:clear true})
-    (utils.set-autocmd "ColorScheme"
-                       {:callback enable-highlights :group "Eyeliner"})))
+    (utils.set-autocmd "ColorScheme" {:callback enable-highlights})))
 
 ;; Apply eyeliner (add highlight) for a given y and token
 (fn apply-eyeliner [y tokens]
@@ -50,8 +49,7 @@
   (utils.set-autocmd
     ["FileType"]
     {:pattern (if (utils.empty? opts.disabled_filetypes) "\\%<0" opts.disabled_filetypes)
-     :callback (λ [] (set vim.b.eyelinerDisabled true))
-     :group "Eyeliner"})) 
+     :callback (λ [] (set vim.b.eyelinerDisabled true))})) 
 
 (fn disable-buftypes []
   (utils.set-autocmd
@@ -61,8 +59,7 @@
         (let [bufnr (vim.api.nvim_get_current_buf)
               {: buftype} (. vim.bo bufnr)]
           (when (utils.exists? opts.disabled_buftypes buftype)
-            (set vim.b.eyelinerDisabled true))))
-     :group "Eyeliner"})) 
+            (set vim.b.eyelinerDisabled true))))})) 
 
 
 {: enable-highlights

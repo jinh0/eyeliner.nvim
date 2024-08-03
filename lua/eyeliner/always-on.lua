@@ -33,10 +33,10 @@ local function enable()
   end
   disable_filetypes()
   disable_buftypes()
-  utils["set-autocmd"]({"CursorMoved", "WinScrolled", "BufReadPost"}, {callback = handle_hover, group = "Eyeliner"})
+  utils["set-autocmd"]({"CursorMoved", "WinScrolled", "BufReadPost"}, {callback = handle_hover})
   local function _7_()
     return clear_eyeliner(prev_y)
   end
-  return utils["set-autocmd"]({"InsertEnter", "BufLeave", "BufWinLeave"}, {callback = _7_, group = "Eyeliner"})
+  return utils["set-autocmd"]({"InsertEnter", "BufLeave", "BufWinLeave"}, {callback = _7_})
 end
 return {enable = enable}

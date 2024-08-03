@@ -45,13 +45,10 @@
   (if opts.debug (vim.notify "On-keypress mode enabled"))
   (disable-filetypes)
   (disable-buftypes)
-  (utils.set-autocmd ["BufEnter"]
-                     {:callback enable-keybinds
-                      :group "Eyeliner"})
+  (utils.set-autocmd ["BufEnter"] {:callback enable-keybinds})
   (utils.set-autocmd
     ["BufLeave"]
-    {:callback (λ [] (pcall remove-keybinds))
-     :group "Eyeliner"}))
+    {:callback (λ [] (pcall remove-keybinds))}))
 
 
 {: enable : remove-keybinds}

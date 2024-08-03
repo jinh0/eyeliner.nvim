@@ -2,7 +2,11 @@
 ;; Shorthand versions of vim API and
 ;; functional programming functions (map, filter, iter, some?)
 
-(local set-autocmd vim.api.nvim_create_autocmd)
+;; Abbreviated version of autocmd for the augroup Eyeliner
+(fn set-autocmd [event opts]
+  (let [merged (vim.tbl_deep_extend "force" {:group :Eyeliner} opts)]
+    (vim.api.nvim_create_autocmd event merged)))
+
 (local del-augroup vim.api.nvim_del_augroup_by_name)
 (local create-augroup vim.api.nvim_create_augroup)
 (local get-current-line vim.api.nvim_get_current_line)

@@ -1,4 +1,7 @@
-local set_autocmd = vim.api.nvim_create_autocmd
+local function set_autocmd(event, opts)
+  local merged = vim.tbl_deep_extend("force", {group = "Eyeliner"}, opts)
+  return vim.api.nvim_create_autocmd(event, merged)
+end
 local del_augroup = vim.api.nvim_del_augroup_by_name
 local create_augroup = vim.api.nvim_create_augroup
 local get_current_line = vim.api.nvim_get_current_line
@@ -66,7 +69,7 @@ local function some_3f(f, list)
 end
 local function exists_3f(list, x)
   local function _6_(y)
-    _G.assert((nil ~= y), "Missing argument y on fnl/eyeliner/utils.fnl:46")
+    _G.assert((nil ~= y), "Missing argument y on fnl/eyeliner/utils.fnl:50")
     return (y == x)
   end
   return some_3f(_6_, list)
