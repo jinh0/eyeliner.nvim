@@ -41,6 +41,15 @@ Default values (in lazy.nvim):
       -- your current cursor position; this is useful if you are dealing with
       -- large files: see https://github.com/jinh0/eyeliner.nvim/issues/41
       max_length = 9999        
+
+      -- filetypes for which eyeliner should be disabled;
+      -- e.g., to disable on help files:
+      -- disable_filetypes = {"help"}
+      disable_filetypes = {},
+
+      -- buftypes for which eyeliner should be disabled
+      -- e.g., disable_buftypes = {"nofile"}
+      disable_buftypes = {},
     }
   end
 }
@@ -135,3 +144,8 @@ Enable/disable/toggle:
 :EyelinerDisable
 :EyelinerToggle
 ```
+
+## Troubleshooting
+
+- To disable eyeliner.nvim on the [nvim-tree](https://github.com/nvim-tree/nvim-tree.lua) plugin, you need to add `nofile` as a disabled buftype to your configuration, i.e., `disable_buftypes = {"nofile"}` and `NvimTree` as a disabled filetype, i.e., `disable_filetypes = {"NvimTree"}`.
+
