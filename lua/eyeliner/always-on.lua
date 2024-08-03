@@ -44,6 +44,6 @@ local function enable()
   local function _10_()
     return clear_eyeliner(prev_y)
   end
-  return utils["set-autocmd"]({"InsertEnter"}, {callback = _10_, group = "Eyeliner"})
+  return utils["set-autocmd"]({"InsertEnter", "BufLeave"}, {callback = _10_, group = "Eyeliner"})
 end
 return {enable = enable}

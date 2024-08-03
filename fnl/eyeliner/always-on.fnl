@@ -37,8 +37,8 @@
   ;; Hover autocmd
   (utils.set-autocmd ["CursorMoved" "WinScrolled" "BufReadPost"]
                      {:callback handle-hover :group "Eyeliner"})
-  ;; Autocmd to clear eyeliner on InsertEnter
-  (utils.set-autocmd ["InsertEnter"]
+  ;; Autocmd to clear eyeliner on InsertEnter and BufLeave
+  (utils.set-autocmd ["InsertEnter" "BufLeave"]
                      {:callback (λ [] (clear-eyeliner prev-y))
                       :group "Eyeliner"}))
 
