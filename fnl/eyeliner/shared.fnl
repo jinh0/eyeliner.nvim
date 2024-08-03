@@ -55,7 +55,7 @@
 
 (fn disable-buftypes []
   (utils.set-autocmd
-    ["BufEnter"]
+    ["BufEnter" "BufWinEnter"]
     {:callback
       (λ []
         (let [bufnr (vim.api.nvim_get_current_buf)

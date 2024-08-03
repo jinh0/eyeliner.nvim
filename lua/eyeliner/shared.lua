@@ -74,6 +74,6 @@ local function disable_buftypes()
       return nil
     end
   end
-  return utils["set-autocmd"]({"BufEnter"}, {callback = _10_, group = "Eyeliner"})
+  return utils["set-autocmd"]({"BufEnter", "BufWinEnter"}, {callback = _10_, group = "Eyeliner"})
 end
 return {["enable-highlights"] = enable_highlights, ["apply-eyeliner"] = apply_eyeliner, ["clear-eyeliner"] = clear_eyeliner, ["disable-filetypes"] = disable_filetypes, ["disable-buftypes"] = disable_buftypes, dim = dim, ["ns-id"] = ns_id}
