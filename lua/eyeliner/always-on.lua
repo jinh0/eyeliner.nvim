@@ -4,6 +4,7 @@ local _local_2_ = require("eyeliner.shared")
 local apply_eyeliner = _local_2_["apply-eyeliner"]
 local clear_eyeliner = _local_2_["clear-eyeliner"]
 local disable_filetypes = _local_2_["disable-filetypes"]
+local disable_buftypes = _local_2_["disable-buftypes"]
 local _local_3_ = require("eyeliner.config")
 local opts = _local_3_["opts"]
 local utils = require("eyeliner.utils")
@@ -31,6 +32,7 @@ local function enable()
   else
   end
   disable_filetypes()
+  disable_buftypes()
   utils["set-autocmd"]({"CursorMoved", "WinScrolled", "BufReadPost"}, {callback = handle_hover, group = "Eyeliner"})
   local function _7_()
     return clear_eyeliner(prev_y)

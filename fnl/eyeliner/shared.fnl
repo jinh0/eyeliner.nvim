@@ -53,10 +53,22 @@
      :callback (λ [] (set vim.b.eyelinerDisabled true))
      :group "Eyeliner"})) 
 
+(fn disable-buftypes []
+  (utils.set-autocmd
+    ["BufEnter"]
+    {:callback
+      (λ []
+        (let [bufnr (vim.api.nvim_get_current_buf)
+              buftype (. (. vim.bo bufnr) :buftype)]
+          (when (utils.exists? opts.disabled_buftypes buftype)
+            (set vim.b.eyelinerDisabled true))))
+     :group "Eyeliner"})) 
+
 
 {: enable-highlights
  : apply-eyeliner
  : clear-eyeliner
  : disable-filetypes
+ : disable-buftypes
  : dim
  : ns-id}

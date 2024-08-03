@@ -2,7 +2,10 @@
 ;; Always-on mode
 
 (local {: get-locations} (require :eyeliner.liner))
-(local {: apply-eyeliner : clear-eyeliner : disable-filetypes} (require :eyeliner.shared))
+(local {: apply-eyeliner
+        : clear-eyeliner
+        : disable-filetypes
+        : disable-buftypes} (require :eyeliner.shared))
 (local {: opts} (require :eyeliner.config))
 (local utils (require :eyeliner.utils))
 
@@ -29,6 +32,7 @@
 (fn enable []
   (if opts.debug (vim.notify "Always-on mode enabled"))
   (disable-filetypes)
+  (disable-buftypes)
   ;; Hover autocmd
   (utils.set-autocmd ["CursorMoved" "WinScrolled" "BufReadPost"]
                      {:callback handle-hover :group "Eyeliner"})

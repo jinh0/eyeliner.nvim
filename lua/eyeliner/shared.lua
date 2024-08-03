@@ -63,4 +63,17 @@ local function disable_filetypes()
   end
   return utils["set-autocmd"]({"FileType"}, {pattern = _7_, callback = _9_, group = "Eyeliner"})
 end
-return {["enable-highlights"] = enable_highlights, ["apply-eyeliner"] = apply_eyeliner, ["clear-eyeliner"] = clear_eyeliner, ["disable-filetypes"] = disable_filetypes, dim = dim, ["ns-id"] = ns_id}
+local function disable_buftypes()
+  local function _10_()
+    local bufnr = vim.api.nvim_get_current_buf()
+    local buftype = vim.bo[bufnr].buftype
+    if utils["exists?"](opts.disabled_buftypes, buftype) then
+      vim.b.eyelinerDisabled = true
+      return nil
+    else
+      return nil
+    end
+  end
+  return utils["set-autocmd"]({"BufEnter"}, {callback = _10_, group = "Eyeliner"})
+end
+return {["enable-highlights"] = enable_highlights, ["apply-eyeliner"] = apply_eyeliner, ["clear-eyeliner"] = clear_eyeliner, ["disable-filetypes"] = disable_filetypes, ["disable-buftypes"] = disable_buftypes, dim = dim, ["ns-id"] = ns_id}

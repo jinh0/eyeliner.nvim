@@ -7,6 +7,7 @@
     :max_length 9999
     :debug false
     :disabled_filetypes []
+    :disabled_buftypes []
     :match "[A-Za-z]"})
 
 (fn setup [user]
