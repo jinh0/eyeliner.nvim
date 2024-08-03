@@ -45,6 +45,9 @@
 (fn exists? [list x]
   (some? (λ [y] (= y x)) list))
 
+(fn empty? [list] (= (length list) 0))
+
+
 {: set-autocmd
  : del-augroup
  : create-augroup
@@ -57,4 +60,5 @@
  : filter
  : iter
  : some?
- : exists?}
+ : exists?
+ : empty?}

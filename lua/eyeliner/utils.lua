@@ -71,4 +71,7 @@ local function exists_3f(list, x)
   end
   return some_3f(_6_, list)
 end
-return {["set-autocmd"] = set_autocmd, ["del-augroup"] = del_augroup, ["create-augroup"] = create_augroup, ["get-current-line"] = get_current_line, ["get-cursor"] = get_cursor, ["get-hl"] = get_hl, ["set-hl"] = set_hl, ["add-hl"] = add_hl, map = map, filter = filter, iter = iter, ["some?"] = some_3f, ["exists?"] = exists_3f}
+local function empty_3f(list)
+  return (#list == 0)
+end
+return {["set-autocmd"] = set_autocmd, ["del-augroup"] = del_augroup, ["create-augroup"] = create_augroup, ["get-current-line"] = get_current_line, ["get-cursor"] = get_cursor, ["get-hl"] = get_hl, ["set-hl"] = set_hl, ["add-hl"] = add_hl, map = map, filter = filter, iter = iter, ["some?"] = some_3f, ["exists?"] = exists_3f, ["empty?"] = empty_3f}
