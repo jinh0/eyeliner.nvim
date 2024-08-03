@@ -44,9 +44,19 @@
                 x)]
     (vim.api.nvim_buf_add_highlight 0 ns-id "EyelinerDimmed" (- y 1) start end)))
 
+;; Disable eyeliner based on filetype
+;; Solution: https://stackoverflow.com/a/6496995
+(fn disable-filetypes []
+  (utils.set-autocmd
+    ["FileType"]
+    {:pattern (if (utils.empty? opts.disabled_filetypes) "\\%<0" opts.disabled_filetypes)
+     :callback (λ [] (set vim.b.eyelinerDisabled true))
+     :group "Eyeliner"})) 
+
 
 {: enable-highlights
  : apply-eyeliner
  : clear-eyeliner
+ : disable-filetypes
  : dim
  : ns-id}

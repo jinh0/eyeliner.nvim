@@ -50,4 +50,17 @@ local function dim(y, x, dir)
   end
   return vim.api.nvim_buf_add_highlight(0, ns_id, "EyelinerDimmed", (y - 1), start, _end)
 end
-return {["enable-highlights"] = enable_highlights, ["apply-eyeliner"] = apply_eyeliner, ["clear-eyeliner"] = clear_eyeliner, dim = dim, ["ns-id"] = ns_id}
+local function disable_filetypes()
+  local _7_
+  if utils["empty?"](opts.disabled_filetypes) then
+    _7_ = "\\%<0"
+  else
+    _7_ = opts.disabled_filetypes
+  end
+  local function _9_()
+    vim.b.eyelinerDisabled = true
+    return nil
+  end
+  return utils["set-autocmd"]({"FileType"}, {pattern = _7_, callback = _9_, group = "Eyeliner"})
+end
+return {["enable-highlights"] = enable_highlights, ["apply-eyeliner"] = apply_eyeliner, ["clear-eyeliner"] = clear_eyeliner, ["disable-filetypes"] = disable_filetypes, dim = dim, ["ns-id"] = ns_id}

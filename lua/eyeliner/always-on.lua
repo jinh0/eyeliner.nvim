@@ -3,6 +3,7 @@ local get_locations = _local_1_["get-locations"]
 local _local_2_ = require("eyeliner.shared")
 local apply_eyeliner = _local_2_["apply-eyeliner"]
 local clear_eyeliner = _local_2_["clear-eyeliner"]
+local disable_filetypes = _local_2_["disable-filetypes"]
 local _local_3_ = require("eyeliner.config")
 local opts = _local_3_["opts"]
 local utils = require("eyeliner.utils")
@@ -29,21 +30,11 @@ local function enable()
     vim.notify("Always-on mode enabled")
   else
   end
-  local _7_
-  if utils["empty?"](opts.disabled_filetypes) then
-    _7_ = "\\%<0"
-  else
-    _7_ = opts.disabled_filetypes
-  end
-  local function _9_()
-    vim.b.eyelinerDisabled = true
-    return nil
-  end
-  utils["set-autocmd"]({"FileType"}, {pattern = _7_, callback = _9_, group = "Eyeliner"})
+  disable_filetypes()
   utils["set-autocmd"]({"CursorMoved", "WinScrolled", "BufReadPost"}, {callback = handle_hover, group = "Eyeliner"})
-  local function _10_()
+  local function _7_()
     return clear_eyeliner(prev_y)
   end
-  return utils["set-autocmd"]({"InsertEnter", "BufLeave"}, {callback = _10_, group = "Eyeliner"})
+  return utils["set-autocmd"]({"InsertEnter", "BufLeave"}, {callback = _7_, group = "Eyeliner"})
 end
 return {enable = enable}

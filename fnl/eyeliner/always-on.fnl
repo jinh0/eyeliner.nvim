@@ -2,7 +2,7 @@
 ;; Always-on mode
 
 (local {: get-locations} (require :eyeliner.liner))
-(local {: apply-eyeliner : clear-eyeliner} (require :eyeliner.shared))
+(local {: apply-eyeliner : clear-eyeliner : disable-filetypes} (require :eyeliner.shared))
 (local {: opts} (require :eyeliner.config))
 (local utils (require :eyeliner.utils))
 
@@ -28,12 +28,7 @@
 ;; Set Eyeliner to always-on mode
 (fn enable []
   (if opts.debug (vim.notify "Always-on mode enabled"))
-  ;; Disable eyeliner based on filetype
-  ;; Solution: https://stackoverflow.com/a/6496995
-  (utils.set-autocmd ["FileType"]
-                     {:pattern (if (utils.empty? opts.disabled_filetypes) "\\%<0" opts.disabled_filetypes)
-                      :callback (λ [] (set vim.b.eyelinerDisabled true))
-                      :group "Eyeliner"}) 
+  (disable-filetypes)
   ;; Hover autocmd
   (utils.set-autocmd ["CursorMoved" "WinScrolled" "BufReadPost"]
                      {:callback handle-hover :group "Eyeliner"})
