@@ -59,7 +59,7 @@
     {:callback
       (λ []
         (let [bufnr (vim.api.nvim_get_current_buf)
-              buftype (. (. vim.bo bufnr) :buftype)]
+              {: buftype} (. vim.bo bufnr)]
           (when (utils.exists? opts.disabled_buftypes buftype)
             (set vim.b.eyelinerDisabled true))))
      :group "Eyeliner"})) 

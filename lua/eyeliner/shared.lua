@@ -66,7 +66,8 @@ end
 local function disable_buftypes()
   local function _10_()
     local bufnr = vim.api.nvim_get_current_buf()
-    local buftype = vim.bo[bufnr].buftype
+    local _let_11_ = vim.bo[bufnr]
+    local buftype = _let_11_["buftype"]
     if utils["exists?"](opts.disabled_buftypes, buftype) then
       vim.b.eyelinerDisabled = true
       return nil

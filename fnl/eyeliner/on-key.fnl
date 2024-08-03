@@ -3,8 +3,15 @@
 
 (local {: get-locations} (require :eyeliner.liner))
 (local {: opts} (require :eyeliner.config))
-(local {: ns-id : clear-eyeliner : apply-eyeliner : dim} (require :eyeliner.shared))
+(local {: ns-id
+        : clear-eyeliner
+        : apply-eyeliner
+        : dim
+        : disable-filetypes
+        : disable-buftypes} (require :eyeliner.shared))
 (local utils (require :eyeliner.utils))
+
+(import-macros {: when-enabled} :fnl/eyeliner/macros)
 
 (fn on-key [key]
   (let [line (utils.get-current-line)
@@ -21,17 +28,30 @@
     (clear-eyeliner y)
     key))
 
-(fn enable []
-  (if opts.debug (vim.notify "On-keypress mode enabled"))
-  (each [_ key (ipairs ["f" "F" "t" "T"])]
-    (vim.keymap.set ["n" "x" "o"]
-                    key
-                    (fn [] (on-key key))
-                    {:expr true})))
+(fn enable-keybinds []
+  (when-enabled
+    (each [_ key (ipairs ["f" "F" "t" "T"])]
+      (vim.keymap.set ["n" "x" "o"]
+                      key
+                      (fn [] (on-key key))
+                      {:expr true :buffer 0}))))
 
 (fn remove-keybinds []
-  (each [_ key (ipairs ["f" "F" "t" "T"])]
-     (vim.keymap.del ["n" "x" "o"] key)))
+  (when-enabled
+    (each [_ key (ipairs ["f" "F" "t" "T"])]
+       (vim.keymap.del ["n" "x" "o"] key {:buffer 0}))))
+
+(fn enable []
+  (if opts.debug (vim.notify "On-keypress mode enabled"))
+  (disable-filetypes)
+  (disable-buftypes)
+  (utils.set-autocmd ["BufEnter"]
+                     {:callback enable-keybinds
+                      :group "Eyeliner"})
+  (utils.set-autocmd
+    ["BufLeave"]
+    {:callback (λ [] (pcall remove-keybinds))
+     :group "Eyeliner"}))
 
 
 {: enable : remove-keybinds}
