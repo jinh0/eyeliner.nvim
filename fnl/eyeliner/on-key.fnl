@@ -50,7 +50,7 @@
   (utils.set-autocmd ["BufEnter" "BufWinEnter"]
                      {:callback enable-keybinds
                       :group "Eyeliner"})
-  (utils.set-autocmd ["BufLeave" "BufWinLeave"]
+  (utils.set-autocmd ["BufLeave"]
                      {:callback remove-keybinds
                       :group "Eyeliner"}))
 

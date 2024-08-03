@@ -64,6 +64,6 @@ local function enable()
   disable_buftypes()
   enable_keybinds()
   utils["set-autocmd"]({"BufEnter", "BufWinEnter"}, {callback = enable_keybinds, group = "Eyeliner"})
-  return utils["set-autocmd"]({"BufLeave", "BufWinLeave"}, {callback = remove_keybinds, group = "Eyeliner"})
+  return utils["set-autocmd"]({"BufLeave"}, {callback = remove_keybinds, group = "Eyeliner"})
 end
 return {enable = enable, ["remove-keybinds"] = remove_keybinds}
