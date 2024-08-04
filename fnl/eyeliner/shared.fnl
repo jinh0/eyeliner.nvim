@@ -16,8 +16,8 @@
     (utils.set-hl "EyelinerPrimary" primary.foreground)
     (utils.set-hl "EyelinerSecondary" secondary.foreground)
     (utils.set-hl "EyelinerDimmed" dimmed.foreground)
-    (utils.create-augroup "Eyeliner" {:clear true})
-    (utils.set-autocmd "ColorScheme" {:callback enable-highlights})))
+    (utils.set-autocmd "ColorScheme"
+                        {:callback enable-highlights :group "Eyeliner"})))
 
 ;; Apply eyeliner (add highlight) for a given y and token
 (fn apply-eyeliner [y tokens]
