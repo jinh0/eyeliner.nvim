@@ -3,24 +3,19 @@ local opts = _local_1_["opts"]
 local utils = require("eyeliner.utils")
 local ns_id = vim.api.nvim_create_namespace("eyeliner")
 local function enable_highlights()
-  local callback
-  local function _2_()
-    local primary = utils["get-hl"]("Constant")
-    local secondary = utils["get-hl"]("Define")
-    local dimmed = utils["get-hl"]("Comment")
-    utils["set-hl"]("EyelinerPrimary", primary.foreground)
-    utils["set-hl"]("EyelinerSecondary", secondary.foreground)
-    return utils["set-hl"]("EyelinerDimmed", dimmed.foreground)
-  end
-  callback = _2_
-  callback()
-  return utils["set-autocmd"]("ColorScheme", {callback = callback, group = "Eyeliner"})
+  local primary = utils["get-hl"]("Constant")
+  local secondary = utils["get-hl"]("Define")
+  local dimmed = utils["get-hl"]("Comment")
+  utils["set-hl"]("EyelinerPrimary", primary.foreground)
+  utils["set-hl"]("EyelinerSecondary", secondary.foreground)
+  utils["set-hl"]("EyelinerDimmed", dimmed.foreground)
+  return utils["set-autocmd"]("ColorScheme", {callback = enable_highlights, group = "Eyeliner"})
 end
 local function apply_eyeliner(y, tokens)
   local function apply(token)
-    local _let_3_ = token
-    local x = _let_3_["x"]
-    local freq = _let_3_["freq"]
+    local _let_2_ = token
+    local x = _let_2_["x"]
+    local freq = _let_2_["freq"]
     local hl_group
     if (freq == 1) then
       hl_group = "EyelinerPrimary"
@@ -55,23 +50,23 @@ local function dim(y, x, dir)
   return vim.api.nvim_buf_add_highlight(0, ns_id, "EyelinerDimmed", (y - 1), start, _end)
 end
 local function disable_filetypes()
-  local _8_
+  local _7_
   if utils["empty?"](opts.disabled_filetypes) then
-    _8_ = "\\%<0"
+    _7_ = "\\%<0"
   else
-    _8_ = opts.disabled_filetypes
+    _7_ = opts.disabled_filetypes
   end
-  local function _10_()
+  local function _9_()
     vim.b.eyelinerDisabled = true
     return nil
   end
-  return utils["set-autocmd"]({"FileType"}, {pattern = _8_, callback = _10_})
+  return utils["set-autocmd"]({"FileType"}, {pattern = _7_, callback = _9_})
 end
 local function disable_buftypes()
-  local function _11_()
+  local function _10_()
     local bufnr = vim.api.nvim_get_current_buf()
-    local _let_12_ = vim.bo[bufnr]
-    local buftype = _let_12_["buftype"]
+    local _let_11_ = vim.bo[bufnr]
+    local buftype = _let_11_["buftype"]
     if utils["exists?"](opts.disabled_buftypes, buftype) then
       vim.b.eyelinerDisabled = true
       return nil
@@ -79,6 +74,6 @@ local function disable_buftypes()
       return nil
     end
   end
-  return utils["set-autocmd"]({"BufEnter", "BufWinEnter"}, {callback = _11_})
+  return utils["set-autocmd"]({"BufEnter", "BufWinEnter"}, {callback = _10_})
 end
 return {["enable-highlights"] = enable_highlights, ["apply-eyeliner"] = apply_eyeliner, ["clear-eyeliner"] = clear_eyeliner, ["disable-filetypes"] = disable_filetypes, ["disable-buftypes"] = disable_buftypes, dim = dim, ["ns-id"] = ns_id}
