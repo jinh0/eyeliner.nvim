@@ -10,14 +10,17 @@
 
 ;; Enable Eyeliner's syntax highlighting, and setup ColorScheme autocmd
 (fn enable-highlights []
-  (let [primary (utils.get-hl "Constant")
-        secondary (utils.get-hl "Define")
-        dimmed (utils.get-hl "Comment")]
-    (utils.set-hl "EyelinerPrimary" primary.foreground)
-    (utils.set-hl "EyelinerSecondary" secondary.foreground)
-    (utils.set-hl "EyelinerDimmed" dimmed.foreground)
-    (utils.create-augroup "Eyeliner" {:clear true})
-    (utils.set-autocmd "ColorScheme" {:callback enable-highlights})))
+  (let [callback
+         (fn []
+          (let [primary (utils.get-hl "Constant")
+                secondary (utils.get-hl "Define")
+                dimmed (utils.get-hl "Comment")]
+            (utils.set-hl "EyelinerPrimary" primary.foreground)
+            (utils.set-hl "EyelinerSecondary" secondary.foreground)
+            (utils.set-hl "EyelinerDimmed" dimmed.foreground)))]
+    (callback)
+    (utils.set-autocmd "ColorScheme"
+                        {:callback callback :group "Eyeliner"})))
 
 ;; Apply eyeliner (add highlight) for a given y and token
 (fn apply-eyeliner [y tokens]
