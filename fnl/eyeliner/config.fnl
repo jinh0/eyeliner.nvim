@@ -8,6 +8,7 @@
     :debug false
     :disabled_filetypes []
     :disabled_buftypes []
+    :default_keymaps true
     :match "[A-Za-z]"})
 
 (fn setup [user]

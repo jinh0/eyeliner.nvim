@@ -10,13 +10,13 @@ local dim = _local_3_["dim"]
 local disable_filetypes = _local_3_["disable-filetypes"]
 local disable_buftypes = _local_3_["disable-buftypes"]
 local utils = require("eyeliner.utils")
-local function on_key(key)
+local function on_key(key, forward_3f)
   local line = utils["get-current-line"]()
   local _let_4_ = utils["get-cursor"]()
   local y = _let_4_[1]
   local x = _let_4_[2]
   local dir
-  if ((key == "f") or (key == "t")) then
+  if forward_3f then
     dir = "right"
   else
     dir = "left"
@@ -27,18 +27,23 @@ local function on_key(key)
   else
   end
   apply_eyeliner(y, to_apply)
-  utils["add-hl"](ns_id, "Cursor", x)
   vim.cmd(":redraw")
   clear_eyeliner(y)
   return key
 end
 local function enable_keybinds()
   if not vim.b[vim.api.nvim_get_current_buf()].eyelinerDisabled then
-    for _, key in ipairs({"f", "F", "t", "T"}) do
+    for _, key in ipairs({"f", "t"}) do
       local function _7_()
-        return on_key(key)
+        return on_key(key, true)
       end
-      vim.keymap.set({"n", "x", "o"}, key, _7_, {expr = true, buffer = 0})
+      vim.keymap.set({"n", "x", "o"}, key, _7_, {buffer = 0, expr = true})
+    end
+    for _, key in ipairs({"F", "T"}) do
+      local function _8_()
+        return on_key(key, false)
+      end
+      vim.keymap.set({"n", "x", "o"}, key, _8_, {buffer = 0, expr = true})
     end
     return nil
   else
@@ -62,10 +67,14 @@ local function enable()
   end
   disable_filetypes()
   disable_buftypes()
-  utils["set-autocmd"]({"BufEnter"}, {callback = enable_keybinds})
-  local function _11_()
-    return pcall(remove_keybinds)
+  if opts.default_keymaps then
+    utils["set-autocmd"]({"BufEnter"}, {callback = enable_keybinds})
+    local function _12_()
+      return pcall(remove_keybinds)
+    end
+    return utils["set-autocmd"]({"BufLeave"}, {callback = _12_})
+  else
+    return nil
   end
-  return utils["set-autocmd"]({"BufLeave"}, {callback = _11_})
 end
 return {enable = enable, ["remove-keybinds"] = remove_keybinds}
