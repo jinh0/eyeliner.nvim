@@ -9,7 +9,7 @@ local function enable_highlights()
   utils["set-hl"]("EyelinerPrimary", primary.foreground)
   utils["set-hl"]("EyelinerSecondary", secondary.foreground)
   utils["set-hl"]("EyelinerDimmed", dimmed.foreground)
-  return utils["set-autocmd"]("ColorScheme", {callback = enable_highlights, group = "Eyeliner"})
+  return utils["set-autocmd"]("ColorScheme", {callback = enable_highlights})
 end
 local function apply_eyeliner(y, tokens)
   local function apply(token)
