@@ -12,7 +12,7 @@ local function get_hl(name)
   return vim.api.nvim_get_hl_by_name(name, true)
 end
 local function set_hl(name, color)
-  return vim.api.nvim_set_hl(0, name, {fg = color, default = true})
+  return vim.api.nvim_set_hl(0, name, {fg = color, force = true})
 end
 local function add_hl(ns_id, hl_group, x)
   local _let_1_ = get_cursor()

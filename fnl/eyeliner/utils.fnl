@@ -19,7 +19,7 @@
   (vim.api.nvim_get_hl_by_name name true))
 
 (fn set-hl [name color]
-  (vim.api.nvim_set_hl 0 name {:fg color :default true}))
+  (vim.api.nvim_set_hl 0 name {:fg color :force true}))
 
 (fn add-hl [ns-id hl-group x]
   (let [[y _] (get-cursor)]
