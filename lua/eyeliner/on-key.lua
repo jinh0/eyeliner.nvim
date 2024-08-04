@@ -11,11 +11,13 @@ local disable_buftypes = _local_3_["disable-buftypes"]
 local utils = require("eyeliner.utils")
 local prev_y = nil
 local cleanup_3f = false
-local function highlight(forward_3f)
+local function highlight(_4_)
+  local _arg_5_ = _4_
+  local forward_3f = _arg_5_["forward"]
   local line = utils["get-current-line"]()
-  local _let_4_ = utils["get-cursor"]()
-  local y = _let_4_[1]
-  local x = _let_4_[2]
+  local _let_6_ = utils["get-cursor"]()
+  local y = _let_6_[1]
+  local x = _let_6_[2]
   local dir
   if forward_3f then
     dir = "right"
@@ -39,16 +41,16 @@ end
 local function enable_keybinds()
   if not vim.b[vim.api.nvim_get_current_buf()].eyelinerDisabled then
     for _, key in ipairs({"f", "t"}) do
-      local function _7_()
-        return on_key(key, true)
+      local function _9_()
+        return on_key(key, {forward = true})
       end
-      vim.keymap.set({"n", "x", "o"}, key, _7_, {buffer = 0, expr = true})
+      vim.keymap.set({"n", "x", "o"}, key, _9_, {buffer = 0, expr = true})
     end
     for _, key in ipairs({"F", "T"}) do
-      local function _8_()
-        return on_key(key, false)
+      local function _10_()
+        return on_key(key, {forward = false})
       end
-      vim.keymap.set({"n", "x", "o"}, key, _8_, {buffer = 0, expr = true})
+      vim.keymap.set({"n", "x", "o"}, key, _10_, {buffer = 0, expr = true})
     end
     return nil
   else
@@ -72,7 +74,7 @@ local function enable()
   end
   disable_filetypes()
   disable_buftypes()
-  local function _12_()
+  local function _14_()
     if cleanup_3f then
       clear_eyeliner(prev_y)
       cleanup_3f = false
@@ -81,13 +83,13 @@ local function enable()
       return nil
     end
   end
-  utils["set-autocmd"]({"CursorMoved"}, {callback = _12_})
+  utils["set-autocmd"]({"CursorMoved"}, {callback = _14_})
   if opts.default_keymaps then
     utils["set-autocmd"]({"BufEnter"}, {callback = enable_keybinds})
-    local function _14_()
+    local function _16_()
       return pcall(remove_keybinds)
     end
-    return utils["set-autocmd"]({"BufLeave"}, {callback = _14_})
+    return utils["set-autocmd"]({"BufLeave"}, {callback = _16_})
   else
     return nil
   end

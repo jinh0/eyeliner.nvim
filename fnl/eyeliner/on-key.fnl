@@ -15,7 +15,8 @@
 (var prev-y nil)
 (var cleanup? false)
 
-(fn highlight [forward?]
+;; This is a public function!
+(fn highlight [{:forward forward?}]
   (let [line (utils.get-current-line)
         [y x] (utils.get-cursor)
         dir (if forward? :right :left)
@@ -37,13 +38,13 @@
     (each [_ key (ipairs ["f" "t"])]
       (vim.keymap.set ["n" "x" "o"]
                       key
-                      (fn [] (on-key key true))
+                      (fn [] (on-key key {:forward true}))
                       {:buffer 0
                        :expr true}))
     (each [_ key (ipairs ["F" "T"])]
       (vim.keymap.set ["n" "x" "o"]
                       key
-                      (fn [] (on-key key false))
+                      (fn [] (on-key key {:forward false}))
                       {:buffer 0
                        :expr true}))))
 
