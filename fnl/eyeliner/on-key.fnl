@@ -3,8 +3,7 @@
 
 (local {: get-locations} (require :eyeliner.liner))
 (local {: opts} (require :eyeliner.config))
-(local {: ns-id
-        : clear-eyeliner
+(local {: clear-eyeliner
         : apply-eyeliner
         : dim
         : disable-filetypes
@@ -13,7 +12,10 @@
 
 (import-macros {: when-enabled} :fnl/eyeliner/macros)
 
-(fn on-key [key forward?]
+(var prev-y nil)
+(var cleanup? false)
+
+(fn highlight [forward?]
   (let [line (utils.get-current-line)
         [y x] (utils.get-cursor)
         dir (if forward? :right :left)
@@ -21,9 +23,14 @@
     ;; Apply eyeliner right after pressing key
     (if opts.dim (dim y x dir))
     (apply-eyeliner y to-apply)
-    (vim.cmd ":redraw") ; :redraw to show highlights
-    (clear-eyeliner y)
-    key))
+    (set prev-y y)
+    (set cleanup? true)
+    (vim.cmd ":redraw"))) ; :redraw to show highlights
+    ; (clear-eyeliner y)))
+
+(fn on-key [key forward?]
+  (highlight forward?)
+  key)
 
 (fn enable-keybinds []
   (when-enabled
@@ -49,6 +56,13 @@
   (if opts.debug (vim.notify "On-keypress mode enabled"))
   (disable-filetypes)
   (disable-buftypes)
+  (utils.set-autocmd
+    ["CursorMoved"]
+    {:callback
+      (λ []
+        (when cleanup?
+          (clear-eyeliner prev-y)
+          (set cleanup? false)))})
   (when opts.default_keymaps
     (utils.set-autocmd ["BufEnter"] {:callback enable-keybinds})
     (utils.set-autocmd
@@ -56,4 +70,4 @@
       {:callback (λ [] (pcall remove-keybinds))})))
 
 
-{: enable : remove-keybinds}
+{: enable : remove-keybinds : highlight}

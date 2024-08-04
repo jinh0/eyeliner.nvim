@@ -3,14 +3,15 @@ local get_locations = _local_1_["get-locations"]
 local _local_2_ = require("eyeliner.config")
 local opts = _local_2_["opts"]
 local _local_3_ = require("eyeliner.shared")
-local ns_id = _local_3_["ns-id"]
 local clear_eyeliner = _local_3_["clear-eyeliner"]
 local apply_eyeliner = _local_3_["apply-eyeliner"]
 local dim = _local_3_["dim"]
 local disable_filetypes = _local_3_["disable-filetypes"]
 local disable_buftypes = _local_3_["disable-buftypes"]
 local utils = require("eyeliner.utils")
-local function on_key(key, forward_3f)
+local prev_y = nil
+local cleanup_3f = false
+local function highlight(forward_3f)
   local line = utils["get-current-line"]()
   local _let_4_ = utils["get-cursor"]()
   local y = _let_4_[1]
@@ -27,8 +28,12 @@ local function on_key(key, forward_3f)
   else
   end
   apply_eyeliner(y, to_apply)
-  vim.cmd(":redraw")
-  clear_eyeliner(y)
+  prev_y = y
+  cleanup_3f = true
+  return vim.cmd(":redraw")
+end
+local function on_key(key, forward_3f)
+  highlight(forward_3f)
   return key
 end
 local function enable_keybinds()
@@ -67,14 +72,24 @@ local function enable()
   end
   disable_filetypes()
   disable_buftypes()
+  local function _12_()
+    if cleanup_3f then
+      clear_eyeliner(prev_y)
+      cleanup_3f = false
+      return nil
+    else
+      return nil
+    end
+  end
+  utils["set-autocmd"]({"CursorMoved"}, {callback = _12_})
   if opts.default_keymaps then
     utils["set-autocmd"]({"BufEnter"}, {callback = enable_keybinds})
-    local function _12_()
+    local function _14_()
       return pcall(remove_keybinds)
     end
-    return utils["set-autocmd"]({"BufLeave"}, {callback = _12_})
+    return utils["set-autocmd"]({"BufLeave"}, {callback = _14_})
   else
     return nil
   end
 end
-return {enable = enable, ["remove-keybinds"] = remove_keybinds}
+return {enable = enable, ["remove-keybinds"] = remove_keybinds, highlight = highlight}
