@@ -50,6 +50,10 @@ Default values (in lazy.nvim):
       -- buftypes for which eyeliner should be disabled
       -- e.g., disable_buftypes = {"nofile"}
       disable_buftypes = {},
+
+      -- add eyeliner to f/F/t/T keymaps;
+      -- see section on advanced configuration for more information
+      default_keymaps = true,
     }
   end
 }
@@ -135,6 +139,43 @@ vim.api.nvim_create_autocmd('ColorScheme', {
     vim.api.nvim_set_hl(0, 'EyelinerPrimary', { bold = true, underline = true })
   end,
 })
+```
+
+## Advanced Configuration
+
+There are two common use cases that require more configuration:
+- You want to use other plugins that change the f/F/t/T functionality, like https://github.com/rhysd/clever-f.vim
+- You want to map eyeliner's highlights to other keys than f/F/t/T
+
+eyeliner.nvim by default maps the f/F/t/T keys. You can disable this with the `default_keymaps` option:
+```lua
+require'eyeliner'.setup {
+  highlight_on_key = true,
+  default_keymaps = false
+}
+```
+
+eyeliner.nvim exposes the highlight functionality:
+```lua
+require("eyeliner").highlight({ forward = true })
+```
+Set `forward = true` for f/t highlights and `forward = false` for F/T highlights.
+
+### Example: Integration with clever-f.vim
+
+The following code adds eyeliner.nvim highlights to clever-f's `f` functionality:
+```lua
+vim.g.clever_f_not_overwrites_standard_mappings = 1
+
+vim.keymap.set(
+  {"n", "x", "o"},
+  "f",
+  function() 
+    require("eyeliner").highlight({ forward = true })
+    return "<Plug>(clever-f-f)"
+  end,
+  {expr = true}
+)
 ```
 
 ## Commands
