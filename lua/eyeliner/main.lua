@@ -37,7 +37,7 @@ local function disable()
     end
     utils["del-augroup"]("Eyeliner")
     if opts.highlight_on_key then
-      on_key["remove-keybinds"]()
+      pcall(on_key["remove-keybinds"])
     else
     end
     if opts.debug then

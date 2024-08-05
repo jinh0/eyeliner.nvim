@@ -29,7 +29,7 @@
       (do (let [[y _] (utils.get-cursor)]
             (shared.clear-eyeliner y))
           (utils.del-augroup "Eyeliner")
-          (if opts.highlight_on_key (on-key.remove-keybinds))
+          (if opts.highlight_on_key (pcall on-key.remove-keybinds))
           (if opts.debug (vim.notify "Disabled eyeliner.nvim"))
           (set enabled false)
           true)
