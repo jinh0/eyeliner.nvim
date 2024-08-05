@@ -178,6 +178,39 @@ vim.keymap.set(
 )
 ```
 
+### Example: Mapping a different character for `f` functionality
+
+Note, the purpose of eyeliner is to provide highlights. It is up to you to replicate the functionality of `f`. Here is a starting point:
+```lua
+vim.keymap.set(
+  {"n", "x", "o"},
+  "x",
+  function()
+
+    -- Eyeliner only adds highlights, nothing else
+    require("eyeliner").highlight({ forward = true })
+
+
+    -- Replicating `f` functionality:
+    -- Note: this doesn't work with the dot command
+
+    -- Get a character from the user
+    local char = vim.fn.getcharstr()
+
+    -- For repeated calls, e.g., `3f`
+    local cnt = vim.v.count1
+    while cnt > 0 do
+      -- vim's builtin search function
+      vim.fn.search(char, "", vim.fn.line("."))
+      cnt = cnt - 1
+    end
+
+     -- Optional: Set charsearch for repeats using ; and ,
+     vim.fn.setcharsearch({ char = char, forward = 1, ["until"] = 0 })
+  end
+)
+```
+
 ## Commands
 Enable/disable/toggle:
 ```
