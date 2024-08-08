@@ -9,7 +9,6 @@ https://user-images.githubusercontent.com/40512164/178066018-0d3fa234-a5b5-4a41-
 The orange letters indicate the unique letter in the word that you can jump to with `f`/`F` right away.
 Blue letters indicate that there is no unique letter in the word, but you can get to it with `f`/`F` and then a repeat with `;`.
 
-
 ## 📦 Installation
 Requirement: Neovim >= 0.7.0
 
@@ -223,3 +222,10 @@ Enable/disable/toggle:
 
 - To disable eyeliner.nvim on the [nvim-tree](https://github.com/nvim-tree/nvim-tree.lua) plugin, you need to add `nofile` as a disabled buftype to your configuration, i.e., `disable_buftypes = {"nofile"}` and `NvimTree` as a disabled filetype, i.e., `disable_filetypes = {"NvimTree"}`.
 
+## Contributing
+
+The plugin is written using the [Fennel](https://fennel-lang.org) programming language in the `fnl/` directory. The transpiled Lua code is committed along with the original Fennel code in the `lua/` directory, so that Fennel is not a dependency for users. Therefore, for development, you must first have Fennel installed. [See here for instructions](https://fennel-lang.org/setup).
+
+To build the project, simply run `make`, which will transpile the Fennel code into Lua.
+
+This repository uses the [Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/) for commit messages.
