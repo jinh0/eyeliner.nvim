@@ -35,18 +35,24 @@
 
 (fn enable-keybinds []
   (when-enabled
-    (each [_ key (ipairs ["f" "t"])]
-      (vim.keymap.set ["n" "x" "o"]
-                      key
-                      (fn [] (on-key key {:forward true}))
-                      {:buffer 0
-                       :expr true}))
-    (each [_ key (ipairs ["F" "T"])]
-      (vim.keymap.set ["n" "x" "o"]
-                      key
-                      (fn [] (on-key key {:forward false}))
-                      {:buffer 0
-                       :expr true}))))
+    (let [default-keys [:f :t :F :T]
+          enabled-keys (if (= true opts.highlight_on_key)
+                           default-keys
+                           opts.highlight_on_key)]
+      (each [_ key (ipairs enabled-keys)]
+        (when (or (= key :f) (= key :t))
+          (vim.keymap.set ["n" "x" "o"]
+                          key
+                          (fn [] (on-key key {:forward true}))
+                          {:buffer 0
+                           :expr true})))
+      (each [_ key (ipairs enabled-keys)]
+        (when (or (= key :F) (= key :T))
+          (vim.keymap.set ["n" "x" "o"]
+                          key
+                          (fn [] (on-key key {:forward false}))
+                          {:buffer 0
+                           :expr true}))))))
 
 (fn remove-keybinds []
   (when-enabled
