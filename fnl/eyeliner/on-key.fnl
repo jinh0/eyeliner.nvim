@@ -57,7 +57,6 @@
   (if opts.debug (vim.notify "On-keypress mode enabled"))
   (disable-filetypes)
   (disable-buftypes)
-  (enable-keybinds)
   (utils.set-autocmd
     ["CursorMoved"]
     {:callback
@@ -66,6 +65,7 @@
           (clear-eyeliner prev-y)
           (set cleanup? false)))})
   (when opts.default_keymaps
+    (enable-keybinds)
     (utils.set-autocmd ["BufEnter"] {:callback enable-keybinds})
     (utils.set-autocmd
       ["BufLeave"]

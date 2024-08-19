@@ -74,7 +74,6 @@ local function enable()
   end
   disable_filetypes()
   disable_buftypes()
-  enable_keybinds()
   local function _14_()
     if cleanup_3f then
       clear_eyeliner(prev_y)
@@ -86,6 +85,7 @@ local function enable()
   end
   utils["set-autocmd"]({"CursorMoved"}, {callback = _14_})
   if opts.default_keymaps then
+    enable_keybinds()
     utils["set-autocmd"]({"BufEnter"}, {callback = enable_keybinds})
     local function _16_()
       return pcall(remove_keybinds)
