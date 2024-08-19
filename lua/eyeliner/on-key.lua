@@ -74,6 +74,7 @@ local function enable()
   end
   disable_filetypes()
   disable_buftypes()
+  enable_keybinds()
   local function _14_()
     if cleanup_3f then
       clear_eyeliner(prev_y)

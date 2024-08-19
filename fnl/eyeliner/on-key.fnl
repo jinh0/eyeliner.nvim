@@ -57,6 +57,7 @@
   (if opts.debug (vim.notify "On-keypress mode enabled"))
   (disable-filetypes)
   (disable-buftypes)
+  (enable-keybinds)
   (utils.set-autocmd
     ["CursorMoved"]
     {:callback
