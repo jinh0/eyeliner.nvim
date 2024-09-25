@@ -70,6 +70,13 @@
         (when cleanup?
           (clear-eyeliner prev-y)
           (set cleanup? false)))})
+  (vim.on_key (fn [char]
+                (let [key (vim.fn.keytrans char)]
+                  (when (= key "<Esc>")
+                    (when cleanup?
+                      (clear-eyeliner prev-y)
+                      (set cleanup? false)))))
+              (vim.api.nvim_get_current_buf))
   (when opts.default_keymaps
     (enable-keybinds)
     (utils.set-autocmd ["BufEnter"] {:callback enable-keybinds})
