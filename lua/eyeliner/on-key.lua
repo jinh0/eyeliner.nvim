@@ -12,12 +12,11 @@ local utils = require("eyeliner.utils")
 local prev_y = nil
 local cleanup_3f = false
 local function highlight(_4_)
-  local _arg_5_ = _4_
-  local forward_3f = _arg_5_["forward"]
+  local forward_3f = _4_["forward"]
   local line = utils["get-current-line"]()
-  local _let_6_ = utils["get-cursor"]()
-  local y = _let_6_[1]
-  local x = _let_6_[2]
+  local _let_5_ = utils["get-cursor"]()
+  local y = _let_5_[1]
+  local x = _let_5_[2]
   local dir
   if forward_3f then
     dir = "right"
@@ -49,19 +48,19 @@ local function enable_keybinds()
     end
     for _, key in ipairs(enabled_keys) do
       if ((key == "f") or (key == "t")) then
-        local function _10_()
+        local function _9_()
           return on_key(key, {forward = true})
         end
-        vim.keymap.set({"n", "x", "o"}, key, _10_, {buffer = 0, expr = true})
+        vim.keymap.set({"n", "x", "o"}, key, _9_, {buffer = 0, expr = true})
       else
       end
     end
     for _, key in ipairs(enabled_keys) do
       if ((key == "F") or (key == "T")) then
-        local function _12_()
+        local function _11_()
           return on_key(key, {forward = false})
         end
-        vim.keymap.set({"n", "x", "o"}, key, _12_, {buffer = 0, expr = true})
+        vim.keymap.set({"n", "x", "o"}, key, _11_, {buffer = 0, expr = true})
       else
       end
     end
@@ -87,7 +86,7 @@ local function enable()
   end
   disable_filetypes()
   disable_buftypes()
-  local function _17_()
+  local function _16_()
     if cleanup_3f then
       clear_eyeliner(prev_y)
       cleanup_3f = false
@@ -96,14 +95,29 @@ local function enable()
       return nil
     end
   end
-  utils["set-autocmd"]({"CursorMoved"}, {callback = _17_})
+  utils["set-autocmd"]({"CursorMoved"}, {callback = _16_})
+  local function _18_(char)
+    local key = vim.fn.keytrans(char)
+    if (key == "<Esc>") then
+      if cleanup_3f then
+        clear_eyeliner(prev_y)
+        cleanup_3f = false
+        return nil
+      else
+        return nil
+      end
+    else
+      return nil
+    end
+  end
+  vim.on_key(_18_, vim.api.nvim_get_current_buf())
   if opts.default_keymaps then
     enable_keybinds()
     utils["set-autocmd"]({"BufEnter"}, {callback = enable_keybinds})
-    local function _19_()
+    local function _21_()
       return pcall(remove_keybinds)
     end
-    return utils["set-autocmd"]({"BufLeave"}, {callback = _19_})
+    return utils["set-autocmd"]({"BufLeave"}, {callback = _21_})
   else
     return nil
   end
