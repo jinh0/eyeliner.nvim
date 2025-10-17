@@ -31,7 +31,7 @@ Default values (in lazy.nvim):
   config = function()
     require'eyeliner'.setup {
       -- show highlights only after keypress
-      highlight_on_key = true,
+      highlight_on_key = false,
 
       -- dim all other characters if set to true (recommended!)
       dim = false,             
