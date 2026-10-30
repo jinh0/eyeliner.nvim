@@ -95,7 +95,7 @@ local function enable()
       return nil
     end
   end
-  utils["set-autocmd"]({"CursorMoved"}, {callback = _16_})
+  utils["set-autocmd"]({"CursorMoved", "SafeState"}, {callback = _16_})
   local function _18_(char)
     local key = vim.fn.keytrans(char)
     if (key == "<Esc>") then

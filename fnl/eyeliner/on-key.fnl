@@ -64,7 +64,7 @@
   (disable-filetypes)
   (disable-buftypes)
   (utils.set-autocmd
-    ["CursorMoved"]
+    ["CursorMoved" "SafeState"]
     {:callback
       (λ []
         (when cleanup?
